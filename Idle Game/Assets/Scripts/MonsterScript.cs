@@ -1,14 +1,21 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterScript : MonoBehaviour
 {
-    //체력
+    // 체력 등..
+    public float maxHealth;  // 미사용
+    public float currentHealth; // 미샤용
+    public float damage; // 미사용
+    public float defense; // 미사용
 
+    // 감지
     public Transform pos;
     public Vector2 BoxSize;
     public LayerMask playerLayer;
+
+    // 이동
     public float spd;
 
     private Rigidbody2D rb;

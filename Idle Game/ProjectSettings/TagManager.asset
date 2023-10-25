@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - Wall
   - Monster
+  - Bullet
   - Atk
   layers:
   - Default
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Player
   - Monster
-  - 
+  - Bullet
   - 
   - 
   - 

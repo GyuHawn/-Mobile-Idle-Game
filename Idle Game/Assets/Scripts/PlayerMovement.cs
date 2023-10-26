@@ -48,8 +48,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
+        Turn();
+    }
+
+    void Move()
+    {
         Vector2 nextVec = inputVec.normalized * spd;
         rigib.MovePosition(rigib.position + nextVec);
+    }
+
+    void Turn()
+    {
+        if (inputVec.x != 0)
+        {
+            float rotationY = inputVec.x > 0 ? 0f : 180f;
+            transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+        }
     }
 
     private void ShootBullet()

@@ -6,6 +6,11 @@ public class CameraMoveMent : MonoBehaviour
 {
     public GameObject target;
 
+    private void Start()
+    {
+        target = GameObject.Find("Player");
+    }
+
     void Update()
     {
         Vector3 targetPosition = target.transform.position;

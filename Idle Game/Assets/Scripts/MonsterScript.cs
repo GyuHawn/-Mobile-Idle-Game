@@ -23,7 +23,7 @@ public class MonsterScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
-        spd = 10;
+        spd = 5;
     }
 
     void Update()

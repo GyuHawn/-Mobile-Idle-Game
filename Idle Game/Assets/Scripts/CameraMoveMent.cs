@@ -13,9 +13,13 @@ public class CameraMoveMent : MonoBehaviour
 
     void Update()
     {
-        Vector3 targetPosition = target.transform.position;
-        targetPosition.z = transform.position.z;
+        if(target != null)
+        {
+            Vector3 targetPosition = target.transform.position;
+            targetPosition.z = transform.position.z;
 
-        transform.position = targetPosition;
+            transform.position = targetPosition;
+        }
+
     }
 }

@@ -4180,7 +4180,7 @@ Transform:
   m_GameObject: {fileID: 124719777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25192,7 +25192,6 @@ MonoBehaviour:
   - {fileID: 3536900435838199934, guid: 63438a0ddde9cc14bbbb7780ec14fc9b, type: 3}
   - {fileID: 2439864310643590615, guid: b3a0ab5656d3a6b4ab931249b301ba96, type: 3}
   - {fileID: 34420236508712076, guid: 763a21a9b9e992842963ae116e561cf9, type: 3}
-  - {fileID: 34420236508712076, guid: 763a21a9b9e992842963ae116e561cf9, type: 3}
   spwanMonster: 0
   isSpawning: 0
   activeMonsters: 0
@@ -25209,7 +25208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 0
-  nextStage: 0
+  deadMonster: 0
 --- !u!4 &800401747
 Transform:
   m_ObjectHideFlags: 0
@@ -60380,11 +60379,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2481370631789600571, guid: f759319e416c8ed47a0d044d511f656e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

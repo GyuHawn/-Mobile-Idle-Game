@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,12 +13,12 @@ public class PlayerMovement : MonoBehaviour
     // 체력 등..
     private float maxHealth; // 체력 = 기본체력 + 업글체력
     private float currentHealth;
-    private float power; // 공격력 = 기본공격 + 업글공격
+    public float power; // 공격력 = 기본공격 + 업글공격
     private float defense; // 방어력 = 기본방어 + 업글방어
 
     private int level; // 업글레벨 (체 + 공 + 방 업글)
     private float totalPower; // 투력 = 공격력(100%) + 방어(50%) + 체력(50%)
-    private float damege; // 데미지 = 공격력 - 방어력
+    public float damege; // 데미지 = 공격력 - 방어력
     public int money; // 현재 돈
 
     // 업글 스탯
@@ -39,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform shoot;
     public float bulletSpeed;
 
+    // 사망
+    private bool isDead;
+
     private Rigidbody2D rigib;
 
     private void Awake()
@@ -49,13 +53,17 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         spd = 0.2f;
-        bulletSpeed = 3;
+        bulletSpeed = 10;
 
         // 기본 스탯 설정
-        baseMaxHealth = 100;
-        basePower = 10;
+        baseMaxHealth = 1;
+        basePower = 15;
         baseDefense = 1;
 
+        // 변동 스탯
+        SetStats();
+
+        power = basePower; // 일단 몬스터 처리를 위한 선언
         StartCoroutine(AutoShoot());
     }
 
@@ -67,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 ShootBullet();
             }
-            yield return new WaitForSeconds(0.5f);   
+            yield return new WaitForSeconds(.5f); // 공격 속도 조절   
         }
     }
 
@@ -92,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Turn();
+        Die();  
     }
 
     void Move()
@@ -136,6 +145,45 @@ public class PlayerMovement : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, shoot.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody2D>().velocity =
                 (currentTarget.transform.position - shoot.position).normalized * bulletSpeed;
+        }
+    }
+    
+    void Die()
+    {
+        if (!isDead && currentHealth <= 0)
+        {
+            isDead = true;
+            transform.position = new Vector2(0, 0);
+            MonsterSpwan spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
+            StageManger stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
+            if (spawner != null)
+            {
+                spawner.ResetStage();
+            }
+            stageManger.deadMonster = 0;
+            SetStats();
+            isDead = false;
+        }
+    }
+
+    public void SetStats()
+    {
+        maxHealth = baseMaxHealth;
+        currentHealth = maxHealth;
+        power = basePower;
+        defense = baseDefense;
+    }
+        private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster"))
+        {
+            MonsterScript monsterScript = collision.gameObject.GetComponent<MonsterScript>();
+
+            if (monsterScript != null)
+            {
+                damege = monsterScript.power - defense;
+                currentHealth -= damege;
+            }
         }
     }
 

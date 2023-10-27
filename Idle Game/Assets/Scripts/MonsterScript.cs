@@ -1,9 +1,11 @@
  using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class MonsterScript : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
     public MonsterSpwan spawner;
     private StageManger sManager;
 
@@ -40,20 +42,27 @@ public class MonsterScript : MonoBehaviour
         spd = 5;
 
         // 기본 스탯 설정
-        baseMaxHealth = 15;
+        baseMaxHealth = 10;
         basePower = 5;
         baseDefense = 0;
         baseMoney = 10;
 
         SetStats(sManager.stage);
-        Debug.Log("Start: " + currentHealth);
     }
 
     void Update()
     {
-        Debug.Log("Update: " + currentHealth);
-        Collider2D playerInBox = Physics2D.OverlapBox(pos.position, BoxSize, 0f, playerLayer);
+        var playerObject = GameObject.Find("Player");
+        if (playerObject != null)
+            playerMovement = playerObject.GetComponent<PlayerMovement>();
+        else
+            return;
 
+        // 데미지 설정
+        damege = playerMovement.power - defense;
+
+
+        Collider2D playerInBox = Physics2D.OverlapBox(pos.position, BoxSize, 0f, playerLayer);
         if (playerInBox != null)
         {
             Vector3 direction = (playerInBox.transform.position - transform.position).normalized;
@@ -62,6 +71,13 @@ public class MonsterScript : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
+        }
+
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+            sManager.deadMonster++;
+            playerMovement.money += money;
         }
     }
 
@@ -72,14 +88,22 @@ public class MonsterScript : MonoBehaviour
             spawner.activeMonsters--;
         }
     }
+
     public void SetStats(int stage)
     {
-        Debug.Log("SetStats : 호출");
-        maxHealth = baseMaxHealth + (baseMaxHealth * (stage / 10));
+        maxHealth = baseMaxHealth + (stage * 2);
         currentHealth = maxHealth;
-        power = basePower + (basePower * (stage / 10));
-        defense = baseDefense + (baseDefense * (stage / 10));
+        power = basePower + (stage * 2);
+        defense = baseDefense + (stage * 2);
         money = baseMoney * stage;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            currentHealth -= damege;
+        }
     }
 
     // 공격 입을시 데미지

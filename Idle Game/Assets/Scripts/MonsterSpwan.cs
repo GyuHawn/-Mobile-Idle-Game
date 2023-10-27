@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class MonsterSpwan : MonoBehaviour
@@ -41,9 +42,6 @@ public class MonsterSpwan : MonoBehaviour
             MonsterScript monsterScript = monsterObj.GetComponent<MonsterScript>();
             monsterScript.spawner = this;
 
-            // Immediately set stats after instantiation
-            monsterScript.SetStats(smanager.stage);
-
             activeMonsters++;
             spwanMonster--;
 
@@ -52,4 +50,18 @@ public class MonsterSpwan : MonoBehaviour
 
         isSpawning = false;
     }
+    public void ResetStage()
+    {
+        // 모든 활성 몬스터를 파괴합니다.
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+        foreach (GameObject monster in monsters)
+        {
+            Destroy(monster);
+        }
+
+        // 스테이지 및 spwanMonster 카운트를 재설정
+        //smanager.stage = smanager.stage;
+        spwanMonster = 10;
+    }
+
 }

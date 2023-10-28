@@ -228,6 +228,8 @@ MonoBehaviour:
   spawner: {fileID: 0}
   maxHealth: 0
   currentHealth: 0
+  power: 0
+  defense: 0
   money: 70
   pos: {fileID: 6358748216867413467}
   BoxSize: {x: 60, y: 40}

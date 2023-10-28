@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4637773199336397478}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 2968783128104799150}
   - component: {fileID: 6508481575156620}
   - component: {fileID: 4826356295496168043}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stage6
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &6508481575156620
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -228,6 +228,8 @@ MonoBehaviour:
   spawner: {fileID: 0}
   maxHealth: 0
   currentHealth: 0
+  power: 0
+  defense: 0
   money: 60
   pos: {fileID: 4637773199336397478}
   BoxSize: {x: 60, y: 40}

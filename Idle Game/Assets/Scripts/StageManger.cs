@@ -20,7 +20,6 @@ public class StageManger : MonoBehaviour
     IEnumerator StartSpawningMonsters()
     {
         yield return new WaitForSeconds(3f); // 게임 시작 후 3초 대기
-        mSpwan.spwanMonster = 3; // 몬스터 소환 개수 설정
     }
 
     void Update()
@@ -38,7 +37,7 @@ public class StageManger : MonoBehaviour
         {
             if (mSpwan.spwanMonster == 0 && mSpwan.activeMonsters == 0)
             {
-                mSpwan.spwanMonster = 3;
+                mSpwan.spwanMonster = 10;
             }
         }
         if (stageCleared)
@@ -47,7 +46,7 @@ public class StageManger : MonoBehaviour
             {
                 stage++; // 스테이지 증가
                 deadMonster = 0;
-                mSpwan.spwanMonster = 3;
+                mSpwan.spwanMonster = 10;
 
                 // 스테이지 클리어 처리
                 stageCleared = true;

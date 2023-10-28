@@ -194,10 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae075893a7f5b243b1f2b3a80082e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   maxHealth: 0
   currentHealth: 0
-  damage: 0
+  power: 0
   defense: 0
+  money: 0
   pos: {fileID: 7650701860871445731}
   BoxSize: {x: 60, y: 40}
   playerLayer:

@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5674283487100528867}
   - component: {fileID: 3249113054864954958}
   - component: {fileID: 3394756307610287538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Stage12
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &3249113054864954958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -194,10 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae075893a7f5b243b1f2b3a80082e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   maxHealth: 0
   currentHealth: 0
-  damage: 0
+  power: 0
   defense: 0
+  money: 0
   pos: {fileID: 7483950874267748468}
   BoxSize: {x: 60, y: 40}
   playerLayer:
@@ -213,7 +215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7483950874267748468}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}

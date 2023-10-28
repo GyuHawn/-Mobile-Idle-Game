@@ -19,7 +19,6 @@ public class MonsterSpwan : MonoBehaviour
     {
         smanager = GetComponent<StageManger>();
         spwanMonster = 0;
-        StartCoroutine(SpawnMonsters());
     }
 
     void Update()
@@ -58,8 +57,6 @@ public class MonsterSpwan : MonoBehaviour
             Destroy(monster);
         }
 
-        // 스테이지 및 spwanMonster 카운트를 재설정
-        //smanager.stage = smanager.stage;
         spwanMonster = 10;
     }
 

@@ -105,8 +105,6 @@ public class MonsterScript : MonoBehaviour
         }
     }
 
-    // 공격 입을시 데미지
-
     /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

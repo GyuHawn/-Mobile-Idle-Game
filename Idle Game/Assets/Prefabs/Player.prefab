@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2483425756553549344}
   - component: {fileID: 8076206095612332567}
   - component: {fileID: 69356174172597420}
+  - component: {fileID: 6442371737450020395}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -207,8 +208,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 0
+  money: 10
+  level: 0
+  totalPower: 0
   damege: 0
-  money: 0
+  upgradeHealth: 1
+  upgradePower: 1
+  upgradeDefense: 1
   spd: 0
   inputVec: {x: 0, y: 0}
   pos: {fileID: 742710011293920046}
@@ -217,7 +223,21 @@ MonoBehaviour:
     type: 3}
   shoot: {fileID: 6505409214305177982}
   bulletSpeed: 2
-  PlayerPrefab: {fileID: 2481370631789600571}
+--- !u!114 &6442371737450020395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481370631789600571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926e9d76880587b4e87a8cf716ceac27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMoney: {fileID: 0}
+  currentLevel: {fileID: 0}
+  currentTotalPower: {fileID: 0}
 --- !u!1 &3101745713320233139
 GameObject:
   m_ObjectHideFlags: 0

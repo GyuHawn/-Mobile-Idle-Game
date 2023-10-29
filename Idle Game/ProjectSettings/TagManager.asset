@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - Bullet
   - Atk
+  - Skill1
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Player
   - Monster
   - Bullet
-  - 
+  - Skill1
   - 
   - 
   - 

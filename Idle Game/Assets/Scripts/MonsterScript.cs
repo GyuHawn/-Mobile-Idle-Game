@@ -32,12 +32,14 @@ public class MonsterScript : MonoBehaviour
     public float spd;
 
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
         sManager = GameObject.Find("Manager").GetComponent<StageManger>();
-        rb = GetComponent<Rigidbody2D>();   
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         spd = 5;
 
         // 기본 스탯 설정
@@ -102,7 +104,23 @@ public class MonsterScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             currentHealth -= damege;
+            StartCoroutine(FlashWhite());
         }
+    }
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Skill1"))
+            {
+                Debug.Log("aaaaaaaaaaaa");
+                currentHealth -= playerMovement.skillPower;
+            }
+        }
+
+    IEnumerator FlashWhite()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = Color.white;
     }
 
     /*private void OnDrawGizmos()

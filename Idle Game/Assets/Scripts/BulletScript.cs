@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
     public float delay;
+    public GameObject target;
 
     private void Start()
     {
@@ -13,6 +12,12 @@ public class BulletScript : MonoBehaviour
 
     private void Update()
     {
+        if (target == null) 
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Destroy(gameObject, delay);
     }
 

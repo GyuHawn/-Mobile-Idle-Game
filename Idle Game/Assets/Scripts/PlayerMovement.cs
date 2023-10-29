@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public int upgradeHealth = 1;
     public int upgradePower = 1;
     public int upgradeDefense = 1;
-    
+
     // 이동
     public float spd;
     public Vector2 inputVec;
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform pos;
     public Vector2 BoxSize;
     private Collider2D currentTarget;  // 현재 타겟
+    public GameObject gun;
 
     // 공격
     public GameObject bulletPrefab;
@@ -44,6 +46,22 @@ public class PlayerMovement : MonoBehaviour
 
     // 사망
     private bool isDead;
+
+    // 스킬
+    public GameObject skill;
+    public GameObject skillObj;
+    public float skillPower;
+
+    // 스킬 쿨타임
+    public GameObject skill1timeUI;
+    public TMP_Text skill1TimeText;
+    public GameObject skill2timeUI;
+    public TMP_Text skill2TimeText;
+    public GameObject skill3timeUI;
+    public TMP_Text skill3TimeText;
+    public float skill1Time = 0;
+    public float skill2Time = 0;
+    public float skill3Time = 0;
 
     private Rigidbody2D rigib;
 
@@ -56,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         spd = 0.1f;
-        bulletSpeed = 10;
+        bulletSpeed = 20;
 
         // 기본 스탯 설정
         baseMaxHealth = 100;
@@ -84,24 +102,57 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 키보드 총 발사
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             ShootBullet();
-        }
+        }*/
 
         // 타겟이 없을때 새로운 적 타겟
         if (!IsValidTarget(currentTarget))
         {
             currentTarget = GetRandomMonster();
         }
+
+        // 각 스킬의 쿨타임을 관리합니다.
+        if (skill1Time > 0) 
+        {
+            skill1Time -= Time.deltaTime;  
+            
+            if(skill1Time <= 0)
+            {
+                skill1timeUI.SetActive(false);
+            }
+        }
+        if (skill2Time > 0)
+        {
+            skill2Time -= Time.deltaTime;
+
+            if (skill2Time <= 0)
+            {
+                skill2timeUI.SetActive(false);
+            }
+        }
+        if (skill3Time > 0)
+        {
+            skill3Time -= Time.deltaTime;
+
+            if (skill3Time <= 0)
+            {
+                skill3timeUI.SetActive(false);
+            }
+        }
+
+        skill1TimeText.text = Mathf.RoundToInt(skill1Time).ToString();
+        skill2TimeText.text = Mathf.RoundToInt(skill2Time).ToString();
+        skill3TimeText.text = Mathf.RoundToInt(skill3Time).ToString();
     }
 
     private void FixedUpdate()
     {
         Move();
         Turn();
-        Die();    
+        Die();
     }
 
     void Move()
@@ -117,14 +168,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Turn()
     {
-        if (inputVec.x != 0)
+        if (IsValidTarget(currentTarget))
         {
-            float rotationY = inputVec.x > 0 ? 0f : 180f;
+            float direction = currentTarget.transform.position.x - transform.position.x;
+            float rotationY = direction > 0 ? 0f : 180f; // 오른쪽 또는 왼쪽을 바라봅니다.
             transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
         }
     }
 
- 
+
+
+
     private Collider2D GetRandomMonster()  // 랜덤 몬스터 추적
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, BoxSize, 0f);
@@ -149,11 +203,12 @@ public class PlayerMovement : MonoBehaviour
         if (IsValidTarget(currentTarget))
         {
             GameObject bullet = Instantiate(bulletPrefab, shoot.position, Quaternion.identity);
+            bullet.GetComponent<BulletScript>().target = currentTarget.gameObject;
             bullet.GetComponent<Rigidbody2D>().velocity =
                 (currentTarget.transform.position - shoot.position).normalized * bulletSpeed;
         }
     }
-    
+
     void Die()
     {
         if (!isDead && currentHealth <= 0)
@@ -180,8 +235,9 @@ public class PlayerMovement : MonoBehaviour
         power = basePower + upgradePower;
         defense = baseDefense + upgradeDefense;
         totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
+        skillPower = power;
     }
-        private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Monster"))
         {
@@ -194,6 +250,74 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public void Skill1()
+    {
+        if (skill1Time <= 0)
+        {
+            if (!skill.activeSelf) // 스킬이 이미 활성화되어 있는지 확인
+            {
+                skill.SetActive(true);
+                StartCoroutine(RotateSkillObject());
+                skill1Time = 60f;
+                skill1timeUI.SetActive(true); // 쿨타임 UI 활성화
+            }
+        }
+    }
+    IEnumerator RotateSkillObject()
+    {
+        float elapsedTime = 0f;
+        float rotateTime = 1.5f;
+
+        while (elapsedTime < rotateTime)
+        {
+            float zRotation = Mathf.Lerp(0, 360, elapsedTime / rotateTime);
+
+            skillObj.transform.rotation = Quaternion.Euler(skillObj.transform.rotation.eulerAngles.x, skillObj.transform.rotation.eulerAngles.y, zRotation);
+
+            yield return null;
+
+            elapsedTime += Time.deltaTime;
+        }
+
+        skillObj.transform.rotation = Quaternion.Euler(skillObj.transform.rotation.eulerAngles.x, skillObj.transform.rotation.eulerAngles.y, 360);
+
+        skill.SetActive(false);
+    }
+
+    public void Skill2()
+    {
+        if(skill2Time <= 0)
+        {         
+            currentHealth = maxHealth;
+            skill2Time = 120f;
+            skill2timeUI.SetActive(true); // 쿨타임 UI 활성화
+        }
+    }
+    public void Skill3()
+    {
+        if(skill3Time <= 0)
+        {
+            power += 1000;
+            defense += 1000;
+            spd += 0.1f;
+            bulletSpeed += 10;
+            skill3timeUI.SetActive(true); // 쿨타임 UI 활성화
+            skill3Time = 120;
+
+            StartCoroutine(SkillUpgrade());
+        }       
+    }
+
+    IEnumerator SkillUpgrade()
+    {
+        yield return new WaitForSeconds(5f);
+        power -= 1000;
+        defense -= 1000;
+        spd -= 0.1f;
+        bulletSpeed -= 10;
+    }
+
 
     /*private void OnDrawGizmos()
     {

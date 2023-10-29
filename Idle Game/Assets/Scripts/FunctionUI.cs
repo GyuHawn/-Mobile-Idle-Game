@@ -7,16 +7,6 @@ public class FunctionUI : MonoBehaviour
 {
     public GameObject upgradeMenu;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void OnUpgrade()
     {
         upgradeMenu.SetActive(!upgradeMenu.activeSelf);

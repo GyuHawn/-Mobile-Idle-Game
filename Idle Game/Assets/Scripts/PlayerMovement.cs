@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetStats()
     {
-        level = upgradeHealth + upgradePower + upgradeDefense;
+        level = (upgradeHealth + upgradePower + upgradeDefense) - 2;
         maxHealth = baseMaxHealth + upgradeHealth;
         currentHealth = maxHealth;
         power = basePower + upgradePower;

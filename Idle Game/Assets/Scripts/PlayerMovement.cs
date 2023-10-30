@@ -69,6 +69,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rigib = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<FixedJoystick>();
+
+        // 게임이 시작될 때 PlayerPrefs에서 스탯 값을 불러옵니다.
+        // 만약 저장된 값이 없다면 기본값을 사용합니다.
+        upgradeHealth = PlayerPrefs.GetInt("upgradeHealth", 1);
+        upgradePower = PlayerPrefs.GetInt("upgradePower", 1);
+        upgradeDefense = PlayerPrefs.GetInt("upgradeDefense", 1);
+        money = PlayerPrefs.GetInt("money", 10);
     }
 
     private void Start()
@@ -86,6 +93,15 @@ public class PlayerMovement : MonoBehaviour
 
         power = basePower; // 일단 몬스터 처리를 위한 선언
         StartCoroutine(AutoShoot());
+    }
+
+    private void OnApplicationQuit() // 수정된 부분
+    {
+        // 게임이 종료될 때 스탯 값을 PlayerPrefs에 저장합니다.
+        PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);
+        PlayerPrefs.SetInt("upgradePower", upgradePower);
+        PlayerPrefs.SetInt("upgradeDefense", upgradeDefense);
+        PlayerPrefs.SetInt("money", money);
     }
 
     IEnumerator AutoShoot() // 자동 사격
@@ -232,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
         level = (upgradeHealth + upgradePower + upgradeDefense) - 2;
         maxHealth = baseMaxHealth + upgradeHealth;
         currentHealth = maxHealth;
-        power = basePower + upgradePower;
+        power = basePower + upgradePower - 357;
         defense = baseDefense + upgradeDefense;
         totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
         skillPower = power;

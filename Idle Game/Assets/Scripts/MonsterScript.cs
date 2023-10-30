@@ -19,7 +19,7 @@ public class MonsterScript : MonoBehaviour
     public float currentHealth;
     public float power; // 공격력 = 기본공격 + (기본공격 * (스테이지/10)) 
     public float defense; // 방어력 = 기본방어 + (기본방어* (스테이지/10))
-    public int money; // 몬스터 돈 = 기본 돈 + (기본돈* (스테이지/10))
+    public static int money; // 몬스터 돈 = 기본 돈 + (기본돈* (스테이지/10))
 
     private float damege; // 데미지 = 공격력 - 방어력
 

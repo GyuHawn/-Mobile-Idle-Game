@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Atk
   - Skill1
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Monster
   - Bullet
   - Skill1
-  - 
+  - Boss
   - 
   - 
   - 

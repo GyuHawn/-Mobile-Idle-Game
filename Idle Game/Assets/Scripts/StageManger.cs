@@ -17,11 +17,15 @@ public class StageManger : MonoBehaviour
         stage = PlayerPrefs.GetInt("stage", 1);
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause(bool pauseStatus)
     {
-        // 게임이 종료될 때 stage 값을 PlayerPrefs에 저장합니다.
-        PlayerPrefs.SetInt("stage", stage);
+        if (pauseStatus)
+        {
+            // 앱이 백그라운드로 전환되는 경우, stage 값을 PlayerPrefs에 저장합니다.
+            PlayerPrefs.SetInt("stage", stage);
+        }
     }
+    
 
     void Start()
     {

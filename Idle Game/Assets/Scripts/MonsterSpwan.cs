@@ -9,6 +9,7 @@ public class MonsterSpwan : MonoBehaviour
 
     public GameObject[] spwaner;
     public GameObject[] monsters;
+    public GameObject[] boss;
 
     public int spwanMonster;
 
@@ -36,7 +37,17 @@ public class MonsterSpwan : MonoBehaviour
         int spawnCount = Mathf.Min(spwaner.Length, spwanMonster);
         for (int i = 0; i < spawnCount; i++)
         {
-            GameObject monsterObj = Instantiate(monsters[smanager.stage % monsters.Length], spwaner[i].transform.position, Quaternion.identity);
+            GameObject monsterObj;
+            if (i == spawnCount - 1) // 마지막 몬스터인 경우
+            {
+                monsterObj = Instantiate(boss[smanager.stage % boss.Length], spwaner[i].transform.position, Quaternion.identity);
+                monsterObj.transform.localScale = new Vector3(3, 3, 3);
+            }
+            else
+            {
+                monsterObj = Instantiate(monsters[smanager.stage % monsters.Length], spwaner[i].transform.position, Quaternion.identity);
+            }
+
             MonsterScript monsterScript = monsterObj.GetComponent<MonsterScript>();
             monsterScript.spawner = this;
 
@@ -48,6 +59,8 @@ public class MonsterSpwan : MonoBehaviour
 
         isSpawning = false;
     }
+
+
     public void ResetStage()
     {
         // 모든 활성 몬스터를 파괴합니다.

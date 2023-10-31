@@ -19,10 +19,13 @@ public class IdleScript : MonoBehaviour
     public GameObject ResetUI;
 
     // 게임종료한 순간부터 다시 킬때까지 시간계산 (예 : 100분 종료 인데 1분마다 스테이지 * 1골드)
-    private void OnApplicationQuit()
-    {      
-        // 게임이 종료되는 현재 시간을 저장합니다.
-        PlayerPrefs.SetString("마지막 종료 시간", DateTime.Now.ToString());
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            // 앱이 백그라운드로 전환되는 경우, 현재 시간을 저장합니다.
+            PlayerPrefs.SetString("마지막 종료 시간", DateTime.Now.ToString());
+        }
     }
 
     private void Start()

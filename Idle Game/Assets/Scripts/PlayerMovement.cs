@@ -95,13 +95,16 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(AutoShoot());
     }
 
-    private void OnApplicationQuit() // 수정된 부분
+    private void OnApplicationPause(bool pauseStatus)
     {
-        // 게임이 종료될 때 스탯 값을 PlayerPrefs에 저장합니다.
-        PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);
-        PlayerPrefs.SetInt("upgradePower", upgradePower);
-        PlayerPrefs.SetInt("upgradeDefense", upgradeDefense);
-        PlayerPrefs.SetInt("money", money);
+        if (pauseStatus)
+        {
+            // 앱이 백그라운드로 전환되는 경우, 스탯 값을 PlayerPrefs에 저장합니다.
+            PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);
+            PlayerPrefs.SetInt("upgradePower", upgradePower);
+            PlayerPrefs.SetInt("upgradeDefense", upgradeDefense);
+            PlayerPrefs.SetInt("money", money);
+        }
     }
 
     IEnumerator AutoShoot() // 자동 사격
@@ -184,13 +187,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Turn()
     {
-        if (IsValidTarget(currentTarget))
+        float direction;
+        // 입력이 없거나 조이스틱이 중앙일때
+        if (joystick.Horizontal == 0 && joystick.Vertical == 0)
         {
-            float direction = currentTarget.transform.position.x - transform.position.x;
-            float rotationY = direction > 0 ? 0f : 180f; // 오른쪽 또는 왼쪽을 바라봅니다.
-            transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+            if (IsValidTarget(currentTarget))
+            {
+                direction = currentTarget.transform.position.x - transform.position.x;
+            }
+            else
+            {
+                return;
+            }
         }
+        else
+        {
+            // 조이스틱 회전
+            direction = joystick.Horizontal;
+        }
+
+        float rotationY = direction > 0 ? 0f : 180f;
+        transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
     }
+
 
 
 
@@ -202,8 +221,10 @@ public class PlayerMovement : MonoBehaviour
         List<Collider2D> monsters = new List<Collider2D>();
 
         foreach (Collider2D collider in colliders)
-            if (collider.CompareTag("Monster"))
+            if (collider.CompareTag("Monster") || collider.CompareTag("Boss"))
+            {
                 monsters.Add(collider);
+            }
 
         return monsters.Count > 0 ? monsters[Random.Range(0, monsters.Count)] : null;
     }
@@ -211,7 +232,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsValidTarget(Collider2D target) // 몬스터 감지
     {
         // 타겟이 null 이거나 Monster 태그가 없으면 false 반환
-        return target != null && target.CompareTag("Monster");
+        return target != null && (target.CompareTag("Monster") || target.CompareTag("Boss"));
     }
 
     private void ShootBullet() // 사격
@@ -248,14 +269,14 @@ public class PlayerMovement : MonoBehaviour
         level = (upgradeHealth + upgradePower + upgradeDefense) - 2;
         maxHealth = baseMaxHealth + upgradeHealth;
         currentHealth = maxHealth;
-        power = basePower + upgradePower - 357;
+        power = basePower + upgradePower;
         defense = baseDefense + upgradeDefense;
         totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
         skillPower = power;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss"))
         {
             MonsterScript monsterScript = collision.gameObject.GetComponent<MonsterScript>();
 

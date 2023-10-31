@@ -23,7 +23,7 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster"))
+        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss"))
         {
             Destroy(gameObject);
         }

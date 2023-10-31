@@ -42,11 +42,24 @@ public class MonsterScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spd = 5;
 
-        // 기본 스탯 설정
-        baseMaxHealth = 10;
-        basePower = 5;
-        baseDefense = 0;
-        baseMoney = 10;
+        bool isBoss = gameObject.CompareTag("Boss");
+
+        if (isBoss)
+        {
+            // Boss일 경우, 기본 스탯 5배
+            baseMaxHealth = 50;
+            basePower = 25;
+            baseDefense = 5;
+            baseMoney = 50;
+        }
+        else
+        {
+            // 기본 스탯 설정
+            baseMaxHealth = 10;
+            basePower = 5;
+            baseDefense = 0;
+            baseMoney = 10;
+        }
 
         SetStats(sManager.stage);
     }
@@ -111,16 +124,18 @@ public class MonsterScript : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Skill1"))
             {
-                Debug.Log("aaaaaaaaaaaa");
                 currentHealth -= playerMovement.skillPower;
             }
         }
 
     IEnumerator FlashWhite()
     {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = Color.white;
+        if (gameObject.CompareTag("Monster"))
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
+        }     
     }
 
     /*private void OnDrawGizmos()

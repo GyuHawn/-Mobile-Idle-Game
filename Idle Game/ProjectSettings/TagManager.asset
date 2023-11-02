@@ -11,6 +11,11 @@ TagManager:
   - Atk
   - Skill1
   - Boss
+  - Nomal
+  - Rare
+  - Unique
+  - Legend
+  - Epic
   layers:
   - Default
   - TransparentFX

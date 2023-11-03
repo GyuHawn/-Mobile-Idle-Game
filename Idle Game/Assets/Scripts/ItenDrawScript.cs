@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ItenDrawScript : MonoBehaviour
 {
+    private InventoryScript inventoryScript;
     private StoreScript storeScript;
 
     // 공용
@@ -34,6 +35,7 @@ public class ItenDrawScript : MonoBehaviour
 
     void Start()
     {
+        inventoryScript = GameObject.Find("Manager").GetComponent<InventoryScript>();
         storeScript = GameObject.Find("Manager").GetComponent<StoreScript>();
         
         // 확률 변수에 누적 확률 할당
@@ -57,6 +59,8 @@ public class ItenDrawScript : MonoBehaviour
 
         GameObject selectedItem = null;
         GameObject[] items;
+        int itemIndex = 0; // 아이템 인덱스 추가
+
 
         // storeScript.itemNum 값에 따라 아이템 타입 선택
         switch (storeScript.itemNum)
@@ -77,22 +81,27 @@ public class ItenDrawScript : MonoBehaviour
         if (randomValue < nomal) // 70% 확률
         {
             selectedItem = items[0]; // 노말 아이템 선택
+            itemIndex = 0;
         }
         else if (randomValue < rare) // 20% 확률
         {
             selectedItem = items[1]; // 레어 아이템 선택
+            itemIndex = 1;
         }
         else if (randomValue < unique) // 7% 확률
         {
             selectedItem = items[2]; // 유니크 아이템 선택
+            itemIndex = 2;
         }
         else if (randomValue < Legend) // 2.5% 확률
         {
             selectedItem = items[3]; // 레전드 아이템 선택
+            itemIndex = 3;
         }
         else // 0.5% 확률
         {
             selectedItem = items[4]; // 에픽 아이템 선택
+            itemIndex = 4;
         }
 
         // 아이템 생성
@@ -100,6 +109,8 @@ public class ItenDrawScript : MonoBehaviour
         createdItem.transform.SetParent(oneDrawPoint.transform, false);
         createdItem.transform.localPosition = Vector3.zero;
         createdItems.Add(createdItem); // 리스트에 아이템 추가
+
+        UpdateInventory(itemIndex); // 추가: 인벤토리 업데이트
     }
 
 
@@ -113,6 +124,7 @@ public class ItenDrawScript : MonoBehaviour
 
             GameObject selectedItem = null;
             GameObject[] items;
+            int itemIndex = 0; // 아이템 인덱스 추가
 
             // storeScript.itemNum 값에 따라 아이템 타입 선택
             switch (storeScript.itemNum)
@@ -134,22 +146,27 @@ public class ItenDrawScript : MonoBehaviour
             if (randomValue < nomal) // 70% 확률
             {
                 selectedItem = items[0]; // 노말 아이템 선택
+                itemIndex = 0;
             }
             else if (randomValue < rare) // 20% 확률
             {
                 selectedItem = items[1]; // 레어 아이템 선택
+                itemIndex = 1;
             }
             else if (randomValue < unique) // 7% 확률
             {
                 selectedItem = items[2]; // 유니크 아이템 선택
+                itemIndex = 2;
             }
             else if (randomValue < Legend) // 2.5% 확률
             {
                 selectedItem = items[3]; // 레전드 아이템 선택
+                itemIndex = 3;
             }
             else // 0.5% 확률
             {
                 selectedItem = items[4]; // 에픽 아이템 선택
+                itemIndex = 4;
             }
 
             // 아이템 생성
@@ -157,9 +174,47 @@ public class ItenDrawScript : MonoBehaviour
             createdItem.transform.SetParent(TenDrawPoint[i].transform, false);
             createdItem.transform.localPosition = Vector3.zero;
             createdItems.Add(createdItem); // 리스트에 아이템 추가
+
+            UpdateInventory(itemIndex); // 추가: 인벤토리 업데이트
         }
     }
 
+    void UpdateInventory(int itemIndex) // 획득한 장비 장비창에 적용
+    {
+        switch (storeScript.itemNum)
+        {
+            case 1: // 무기
+                switch (itemIndex)
+                {
+                    case 0: inventoryScript.weaponNomalNum++; break;
+                    case 1: inventoryScript.weaponRareNum++; break;
+                    case 2: inventoryScript.weaponUnipueNum++; break;
+                    case 3: inventoryScript.weaponLegendNum++; break;
+                    case 4: inventoryScript.weaponEpicNum++; break;
+                }
+                break;
+            case 2: // 방어구
+                switch (itemIndex)
+                {
+                    case 0: inventoryScript.armorNomalNum++; break;
+                    case 1: inventoryScript.armorRareNum++; break;
+                    case 2: inventoryScript.armorUnipueNum++; break;
+                    case 3: inventoryScript.armorLegendNum++; break;
+                    case 4: inventoryScript.armorEpicNum++; break;
+                }
+                break;
+            case 3: // 반지
+                switch (itemIndex)
+                {
+                    case 0: inventoryScript.ringNomalNum++; break;
+                    case 1: inventoryScript.ringRareNum++; break;
+                    case 2: inventoryScript.ringUnipueNum++; break;
+                    case 3: inventoryScript.ringLegendNum++; break;
+                    case 4: inventoryScript.ringEpicNum++; break;
+                }
+                break;
+        }
+    }
 
     // 뽑기 후 상점으로 돌아가기
     public void ShopScreen()

@@ -35,8 +35,8 @@ public class ItenDrawScript : MonoBehaviour
 
     void Start()
     {
-        inventoryScript = GameObject.Find("Manager").GetComponent<InventoryScript>();
-        storeScript = GameObject.Find("Manager").GetComponent<StoreScript>();
+        inventoryScript = GameObject.Find("ItemManager").GetComponent<InventoryScript>();
+        storeScript = GameObject.Find("ItemManager").GetComponent<StoreScript>();
         
         // 확률 변수에 누적 확률 할당
         nomal = 0.7f; // 전체 70%
@@ -44,12 +44,6 @@ public class ItenDrawScript : MonoBehaviour
         unique = 0.97f; // 전체 97%
         Legend = 0.995f; // 전체 99.5%
         epic = 1.0f; // 전체 100%
-    }
-
-    
-    void Update()
-    {
-        
     }
 
     public void OneDraw()
@@ -142,7 +136,6 @@ public class ItenDrawScript : MonoBehaviour
                     return;
             }
 
-            Debug.Log(randomValue);
             if (randomValue < nomal) // 70% 확률
             {
                 selectedItem = items[0]; // 노말 아이템 선택

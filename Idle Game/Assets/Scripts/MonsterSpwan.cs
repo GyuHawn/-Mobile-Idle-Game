@@ -61,16 +61,16 @@ public class MonsterSpwan : MonoBehaviour
     }
 
 
-    public void ResetStage()
+    public void RemoveAllMonsters()
     {
-        // 모든 활성 몬스터를 파괴합니다.
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
-        foreach (GameObject monster in monsters)
+        foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
         {
             Destroy(monster);
         }
 
-        spwanMonster = 10;
+        foreach (GameObject boss in GameObject.FindGameObjectsWithTag("Boss"))
+        {
+            Destroy(boss);
+        }
     }
-
 }

@@ -199,13 +199,14 @@ MonoBehaviour:
   currentHealth: 0
   power: 0
   defense: 0
-  money: 10
   pos: {fileID: 1533503007842871493}
   BoxSize: {x: 60, y: 40}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   spd: 0
+  damageTextPrefab: {fileID: 4841870688781631566, guid: 5f7857e0ccb468e49a7ea5214fded8a9,
+    type: 3}
 --- !u!1 &6301702215036016835
 GameObject:
   m_ObjectHideFlags: 0

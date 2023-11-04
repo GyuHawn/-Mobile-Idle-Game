@@ -6,9 +6,19 @@ using UnityEngine.UI;
 public class FunctionUI : MonoBehaviour
 {
     public GameObject upgradeMenu;
+    public GameObject shopMenu;
+    public GameObject inventoryMenu;
 
     public void OnUpgrade()
     {
         upgradeMenu.SetActive(!upgradeMenu.activeSelf);
+    }
+    public void OnShop()
+    {
+        shopMenu.SetActive(!shopMenu.activeSelf);
+    }
+    public void OnInventory()
+    {
+        inventoryMenu.SetActive(!inventoryMenu.activeSelf);
     }
 }

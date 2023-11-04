@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MonsterScript : MonoBehaviour
@@ -120,13 +121,14 @@ public class MonsterScript : MonoBehaviour
             StartCoroutine(FlashWhite());
         }
     }
-        private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Skill1"))
         {
-            if (collision.gameObject.CompareTag("Skill1"))
-            {
-                currentHealth -= playerMovement.skillPower;
-            }
+            currentHealth -= playerMovement.skillPower;
         }
+    }
 
     IEnumerator FlashWhite()
     {

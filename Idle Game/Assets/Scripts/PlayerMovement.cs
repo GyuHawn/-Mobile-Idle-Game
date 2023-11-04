@@ -63,6 +63,11 @@ public class PlayerMovement : MonoBehaviour
     public float skill2Time = 0;
     public float skill3Time = 0;
 
+    // 착용한 장비 스탯
+    private float prevWeaponPower = 0;
+    private float prevArmorDefense = 0;
+    private float prevRingHealth = 0;
+
     private Rigidbody2D rigib;
 
     private void Awake()
@@ -70,8 +75,8 @@ public class PlayerMovement : MonoBehaviour
         rigib = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<FixedJoystick>();
 
-        // 게임이 시작될 때 PlayerPrefs에서 스탯 값을 불러옵니다.
-        // 만약 저장된 값이 없다면 기본값을 사용합니다.
+        // 게임이 시작될 때 PlayerPrefs에서 스탯 값을 불러온다
+        // 만약 저장된 값이 없다면 기본값을 사용
         upgradeHealth = PlayerPrefs.GetInt("upgradeHealth", 1);
         upgradePower = PlayerPrefs.GetInt("upgradePower", 1);
         upgradeDefense = PlayerPrefs.GetInt("upgradeDefense", 1);
@@ -95,16 +100,22 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(AutoShoot());
     }
 
-    private void OnApplicationPause(bool pauseStatus)
+    private void OnApplicationPause(bool pauseStatus) // 어플이 정지될때 데이터 저장
     {
         if (pauseStatus)
         {
-            // 앱이 백그라운드로 전환되는 경우, 스탯 값을 PlayerPrefs에 저장합니다.
             PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);
             PlayerPrefs.SetInt("upgradePower", upgradePower);
             PlayerPrefs.SetInt("upgradeDefense", upgradeDefense);
             PlayerPrefs.SetInt("money", money);
         }
+    }
+    private void OnApplicationQuit() // 어플 종료시 데이터 저장
+    {
+        PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);
+        PlayerPrefs.SetInt("upgradePower", upgradePower);
+        PlayerPrefs.SetInt("upgradeDefense", upgradeDefense);
+        PlayerPrefs.SetInt("money", money);
     }
 
     IEnumerator AutoShoot() // 자동 사격
@@ -121,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("maxHealth" + maxHealth);
         // 키보드 총 발사
         /*if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -210,10 +222,6 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
     }
 
-
-
-
-
     private Collider2D GetRandomMonster()  // 랜덤 몬스터 추적
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, BoxSize, 0f);
@@ -256,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
             StageManger stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
             if (spawner != null)
             {
-                spawner.ResetStage();
+                spawner.RemoveAllMonsters();
             }
             stageManger.deadMonster = 0;
             SetStats();
@@ -265,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void SetStats()
-    {
+    {       
         level = (upgradeHealth + upgradePower + upgradeDefense) - 2;
         maxHealth = baseMaxHealth + upgradeHealth;
         currentHealth = maxHealth;
@@ -274,6 +282,25 @@ public class PlayerMovement : MonoBehaviour
         totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
         skillPower = power;
     }
+
+    public void ChangeEquipment(float newWeaponPower, float newArmorDefense, float newRingHealth)
+    {
+        // 이전 장비의 스탯을 제거
+        power -= prevWeaponPower;
+        defense -= prevArmorDefense;
+        maxHealth -= prevRingHealth;
+
+        // 새 장비의 스탯을 저장
+        prevWeaponPower = newWeaponPower;
+        prevArmorDefense = newArmorDefense;
+        prevRingHealth = newRingHealth;
+
+        // 새 장비의 스탯을 추가
+        power += newWeaponPower;
+        defense += newArmorDefense;
+        maxHealth += newRingHealth;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss"))

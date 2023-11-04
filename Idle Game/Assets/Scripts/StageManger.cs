@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class StageManger : MonoBehaviour
@@ -8,12 +9,10 @@ public class StageManger : MonoBehaviour
     public int stage;
 
     public int deadMonster = 0;
-    private bool stageCleared = false; // 스테이지 클리어 여부를 저장할 변수
+    private bool stageCleared = false; // 스테이지 클리어 여부
 
-    void Awake() // 수정된 부분
+    void Awake()
     {
-        // 게임이 시작될 때 PlayerPrefs에서 stage 값을 불러옵니다.
-        // 만약 저장된 값이 없다면 기본값으로 1을 사용합니다.
         stage = PlayerPrefs.GetInt("stage", 1);
     }
 
@@ -21,11 +20,14 @@ public class StageManger : MonoBehaviour
     {
         if (pauseStatus)
         {
-            // 앱이 백그라운드로 전환되는 경우, stage 값을 PlayerPrefs에 저장합니다.
             PlayerPrefs.SetInt("stage", stage);
         }
     }
-    
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("stage", stage);
+    }
+
 
     void Start()
     {

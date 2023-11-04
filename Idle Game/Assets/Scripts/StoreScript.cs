@@ -26,12 +26,6 @@ public class StoreScript : MonoBehaviour
         itemNum = 1;
     }
 
-   
-    void Update()
-    {
-        
-    }
-
     // 상점 장비 전환
     public void WeaponShop()
     {

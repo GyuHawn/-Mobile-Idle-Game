@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class InventoryScript : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+
     // 공용
     public GameObject inventory; // 장비창
 
@@ -123,6 +126,11 @@ public class InventoryScript : MonoBehaviour
     // 장비 효과
     public TMP_Text itemForceText;
 
+    private void Start()
+    {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+    }
+
     void Update()
     {
         // 무기
@@ -215,6 +223,7 @@ public class InventoryScript : MonoBehaviour
 
         // 무기의 공격력 설정
         weaponPower = weaponPowerValues[weaponIndex];
+        playerMovement.ChangeEquipment(weaponPower,0 , 0);
     }
 
     // 방어구 장착
@@ -232,11 +241,13 @@ public class InventoryScript : MonoBehaviour
 
         // 방어구의 방어력 설정
         armorDefense = armorDefenseValues[armorIndex];
+        playerMovement.ChangeEquipment(0, armorDefense, 0);
     }
 
     // 반지 장착
     void EquipRing(int ringIndex)
     {
+        Debug.Log("ringHealthValues" + ringHealthValues);
         // 이전에 장착된 반지가 있으면 제거
         if (currentRingObj != null)
         {
@@ -249,6 +260,7 @@ public class InventoryScript : MonoBehaviour
 
         // 반지의 체력 설정
         ringHealth = ringHealthValues[ringIndex];
+        playerMovement.ChangeEquipment(0, 0, ringHealth);
     }
 
     // 무기 장착 버튼
@@ -439,8 +451,6 @@ public class InventoryScript : MonoBehaviour
             ringEpicNum++;
         }
     }
-
-
 
     // 장비창 닫기
     public void ExitInventory()

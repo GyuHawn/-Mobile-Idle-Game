@@ -19650,7 +19650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1489600297
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22749,7 +22749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1750684042
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26287,6 +26287,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1489600296}
+  weaponPower: 0
+  armorDefense: 0
+  ringHealth: 0
+  weaponPowerValues:
+  - 1
+  - 3
+  - 5
+  - 10
+  - 20
+  armorDefenseValues:
+  - 1
+  - 3
+  - 5
+  - 10
+  - 20
+  ringHealthValues:
+  - 1
+  - 3
+  - 5
+  - 10
+  - 20
   weaponPrefabs:
   - {fileID: 1686066093522756622, guid: 9e2f7c47e0d13554491f09c1c2ec4e5b, type: 3}
   - {fileID: 3395877930093740036, guid: 369d68b3450adfc47b8af9049c83bcbe, type: 3}
@@ -26371,6 +26392,7 @@ MonoBehaviour:
   ringUniqueNumText: {fileID: 1757658131}
   ringLegendNumText: {fileID: 982412774}
   ringEpicNumText: {fileID: 1738625020}
+  itemForceText: {fileID: 1638579586}
 --- !u!1001 &2043026079
 PrefabInstance:
   m_ObjectHideFlags: 0

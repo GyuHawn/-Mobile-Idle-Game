@@ -9,6 +9,14 @@ public class InventoryScript : MonoBehaviour
     // 공용
     public GameObject inventory; // 장비창
 
+    // 장비별 수치 설정
+    public float weaponPower; // 무기 공격력
+    public float armorDefense; // 방어구 방어력
+    public float ringHealth; // 반지 체력
+    public float[] weaponPowerValues = new float[] { 1, 3, 5, 10, 20 };
+    public float[] armorDefenseValues = new float[] { 1, 3, 5, 10, 20 };
+    public float[] ringHealthValues = new float[] { 1, 3, 5, 10, 20 };
+
     // 프리팹
     public GameObject[] weaponPrefabs;
     public GameObject[] armorPrefabs;
@@ -36,7 +44,6 @@ public class InventoryScript : MonoBehaviour
     public int weaponEpicNum;
 
     // 방어구
-
     // 미보유 
     public GameObject noneArmorNomal; // 노말 방어구 미보유
     public GameObject noneArmorRare;
@@ -94,9 +101,6 @@ public class InventoryScript : MonoBehaviour
     public GameObject currentArmorPos;
     public GameObject currentRingPos;
 
-    // 장착 효과
-
-
     // 장비 개수 텍스트
     public TMP_Text weaponNomalNumText;
     public TMP_Text weaponRareNumText;
@@ -116,6 +120,8 @@ public class InventoryScript : MonoBehaviour
     public TMP_Text ringLegendNumText;
     public TMP_Text ringEpicNumText;
 
+    // 장비 효과
+    public TMP_Text itemForceText;
 
     void Update()
     {
@@ -159,6 +165,9 @@ public class InventoryScript : MonoBehaviour
         UpdateItemText(ringUnipueNum, ringUniqueNumText);
         UpdateItemText(ringLegendNum, ringLegendNumText);
         UpdateItemText(ringEpicNum, ringEpicNumText);
+
+        // 장착중인 장비 효과
+        itemForceText.text = "무기 + " + weaponPower + "  방어구 + " + armorDefense + "  반지 + " + ringHealth;
     }
 
     // 장비 개수 텍스트 업데이트
@@ -203,6 +212,9 @@ public class InventoryScript : MonoBehaviour
         // 새 무기 생성
         currentWeaponObj = Instantiate(weaponPrefabs[weaponIndex], Vector3.zero, Quaternion.identity);
         currentWeaponObj.transform.SetParent(currentWeaponPos.transform, false);
+
+        // 무기의 공격력 설정
+        weaponPower = weaponPowerValues[weaponIndex];
     }
 
     // 방어구 장착
@@ -217,6 +229,9 @@ public class InventoryScript : MonoBehaviour
         // 새 방어구 생성
         currentArmorObj = Instantiate(armorPrefabs[armorIndex], Vector3.zero, Quaternion.identity);
         currentArmorObj.transform.SetParent(currentArmorPos.transform, false);
+
+        // 방어구의 방어력 설정
+        armorDefense = armorDefenseValues[armorIndex];
     }
 
     // 반지 장착
@@ -231,6 +246,9 @@ public class InventoryScript : MonoBehaviour
         // 새 반지 생성
         currentRingObj = Instantiate(ringPrefabs[ringIndex], Vector3.zero, Quaternion.identity);
         currentRingObj.transform.SetParent(currentRingPos.transform, false);
+
+        // 반지의 체력 설정
+        ringHealth = ringHealthValues[ringIndex];
     }
 
     // 무기 장착 버튼

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 18
+  controlID: 108
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 19
+  controlID: 40
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 20
+  controlID: 41
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -271,8 +271,8 @@ MonoBehaviour:
     y: 0
     width: 368
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -830,9 +830,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 96660000
-      m_LastClickedID: 26262
-      m_ExpandedIDs: bcdcfeffbedcfeffc0dcfeffc4dcfeffc6dcfeffcadcfeffcedcfeffd2dcfeffd6dcfeffd8dcfeffdadcfeff6addfeff6cddfeff6eddfeff72ddfeff74ddfeff78ddfeff7cddfeff80ddfeff84ddfeff86ddfeff88ddfeff44e1feffe8e1feff74e4feff26e5feffe0e5feff14e9feff7ee9feff06eafeffdaeafeffecf0feffc8f1feff2aa2ffff98beffff0cfbffff166200007a620000a4620000d06200006a630000c2630000406400006c64000074640000c6640000ce640000de640000226500006a650000b0650000766600007e660000a2660000ac660000
+      m_SelectedIDs: e2890000
+      m_LastClickedID: 0
+      m_ExpandedIDs: e6cbffff3accffff0cfbffff9e6300007464000046690000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -983,7 +983,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 26262
+  m_LastSelectedObjectID: 26936
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1129,7 +1129,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Item/Weapon
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1137,16 +1137,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Item/Weapon
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\llll\Desktop\project\Mobile-Idle-Game\Idle Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 582}
-    m_SelectedIDs: 2c690000
-    m_LastClickedID: 26924
-    m_ExpandedIDs: 00000000fe600000e0680000e2680000e4680000e6680000e8680000ea680000ec6800001e690000226900007ee5000084e5000000ca9a3b
+    scrollPos: {x: 0, y: 310}
+    m_SelectedIDs: d66b0000
+    m_LastClickedID: 27606
+    m_ExpandedIDs: 0000000000610000966b0000986b00009a6b00009c6b00009e6b0000a06b0000a26b0000d26b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1174,7 +1174,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fe600000e0680000e2680000e4680000e6680000e8680000ea680000ec680000
+    m_ExpandedIDs: 0000000000610000966b0000986b00009a6b00009c6b00009e6b0000a06b0000a26b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreScript : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+
+    // 플레이어 돈
+    public TMP_Text playerMoney;
+
     // 현재 뽑을 장비
     public int itemNum; // 1 - 무기, 2 - 방어구, 3 - 반지
 
@@ -23,7 +29,13 @@ public class StoreScript : MonoBehaviour
     
     void Start()
     {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         itemNum = 1;
+    }
+
+    private void Update()
+    {
+        playerMoney.text = playerMovement.money.ToString();
     }
 
     // 상점 장비 전환
@@ -52,15 +64,23 @@ public class StoreScript : MonoBehaviour
     // 창 전환
     public void OneDrawScreen()
     {
-        oneDraw.SetActive(true);
-        TenDraw.SetActive(false);
-        shop.SetActive(false);
+        if (playerMovement.money >= 100)
+        {
+            oneDraw.SetActive(true);
+            TenDraw.SetActive(false);
+            shop.SetActive(false);
+            playerMovement.money -= 100;
+        }
     }
     public void TenDrawScreen()
     {
-        oneDraw.SetActive(false);
-        TenDraw.SetActive(true);
-        shop.SetActive(false);
+        if (playerMovement.money >= 1000)
+        {
+            oneDraw.SetActive(false);
+            TenDraw.SetActive(true);
+            shop.SetActive(false);
+            playerMovement.money -= 1000;
+        }
     }
 
     public void ExitShop()

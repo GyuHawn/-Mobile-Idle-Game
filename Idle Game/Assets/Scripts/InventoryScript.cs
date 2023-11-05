@@ -247,7 +247,6 @@ public class InventoryScript : MonoBehaviour
     // 반지 장착
     void EquipRing(int ringIndex)
     {
-        Debug.Log("ringHealthValues" + ringHealthValues);
         // 이전에 장착된 반지가 있으면 제거
         if (currentRingObj != null)
         {

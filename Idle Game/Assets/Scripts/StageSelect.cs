@@ -35,7 +35,13 @@ public class StageSelect : MonoBehaviour
 
         if (int.TryParse(stageNumberString, out stageNumber))
         {
-            // 스테이지 변경 전에 모든 몬스터를 제거합니다.
+            // 최대 스테이지보다 높은 스테이지로 이동없도록.
+            if (stageNumber > stageManager.maxStage)
+            {
+                return;
+            }
+
+            // 스테이지 변경 전에 모든 몬스터를 제거
             monsterSpwan.RemoveAllMonsters();
 
             stageManager.stage = stageNumber;
@@ -44,5 +50,6 @@ public class StageSelect : MonoBehaviour
             monsterSpwan.RemoveAllMonsters();
         }
     }
+
 
 }

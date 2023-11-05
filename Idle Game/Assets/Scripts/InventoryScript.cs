@@ -129,7 +129,154 @@ public class InventoryScript : MonoBehaviour
     private void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+
+        // 장비 개수 불러오기
+        weaponNomalNum = PlayerPrefs.GetInt("weaponNomalNum", weaponNomalNum);
+        weaponRareNum = PlayerPrefs.GetInt("weaponRareNum", weaponRareNum);
+        weaponUnipueNum = PlayerPrefs.GetInt("weaponUnipueNum", weaponUnipueNum);
+        weaponLegendNum = PlayerPrefs.GetInt("weaponLegendNum", weaponLegendNum);
+        weaponEpicNum = PlayerPrefs.GetInt("weaponEpicNum", weaponEpicNum);
+
+        armorNomalNum = PlayerPrefs.GetInt("armorNomalNum", armorNomalNum);
+        armorRareNum = PlayerPrefs.GetInt("armorRareNum", armorRareNum);
+        armorUnipueNum = PlayerPrefs.GetInt("armorUnipueNum", armorUnipueNum);
+        armorLegendNum = PlayerPrefs.GetInt("armorLegendNum", armorLegendNum);
+        armorEpicNum = PlayerPrefs.GetInt("armorEpicNum", armorEpicNum);
+
+        ringNomalNum = PlayerPrefs.GetInt("ringNomalNum", ringNomalNum);
+        ringRareNum = PlayerPrefs.GetInt("ringRareNum", ringRareNum);
+        ringUnipueNum = PlayerPrefs.GetInt("ringUnipueNum", ringUnipueNum);
+        ringLegendNum = PlayerPrefs.GetInt("ringLegendNum", ringLegendNum);
+        ringEpicNum = PlayerPrefs.GetInt("ringEpicNum", ringEpicNum);
+
+        // 장비 장착 정보 불러오기
+        currentWeapon = PlayerPrefs.GetInt("currentWeapon", currentWeapon);
+        switch (currentWeapon)
+        {
+            case 1:
+                EquipWeapon(0);
+                break;
+            case 2:
+                EquipWeapon(1);
+                break;
+            case 3:
+                EquipWeapon(2);
+                break;
+            case 4:
+                EquipWeapon(3);
+                break;
+            case 5:
+                EquipWeapon(4);
+                break;
+        }
+
+        currentArmor = PlayerPrefs.GetInt("currentArmor", currentArmor);
+        switch (currentArmor)
+        {
+            case 1:
+                EquipArmor(0);
+                break;
+            case 2:
+                EquipArmor(1);
+                break;
+            case 3:
+                EquipArmor(2);
+                break;
+            case 4:
+                EquipArmor(3);
+                break;
+            case 5:
+                EquipArmor(4);
+                break;
+        }
+
+        currentRing = PlayerPrefs.GetInt("currentRing", currentRing);
+        switch (currentRing)
+        {
+            case 1:
+                EquipRing(0);
+                break;
+            case 2:
+                EquipRing(1);
+                break;
+            case 3:
+                EquipRing(2);
+                break;
+            case 4:
+                EquipRing(3);
+                break;
+            case 5:
+                EquipRing(4);
+                break;
+        }
     }
+
+
+    private void OnApplicationPause(bool pauseStatus) // 어플이 정지될때 데이터 저장
+    {
+        if (pauseStatus)
+        {
+            // 무기
+            PlayerPrefs.SetInt("weaponNomalNum", weaponNomalNum);
+            PlayerPrefs.SetInt("weaponRareNum", weaponRareNum);
+            PlayerPrefs.SetInt("weaponUnipueNum", weaponUnipueNum);
+            PlayerPrefs.SetInt("weaponLegendNum", weaponLegendNum);
+            PlayerPrefs.SetInt("weaponEpicNum", weaponEpicNum);
+
+            // 방어구
+            PlayerPrefs.SetInt("armorNomalNum", armorNomalNum);
+            PlayerPrefs.SetInt("armorRareNum", armorRareNum);
+            PlayerPrefs.SetInt("armorUnipueNum", armorUnipueNum);
+            PlayerPrefs.SetInt("armorLegendNum", armorLegendNum);
+            PlayerPrefs.SetInt("armorEpicNum", armorEpicNum);
+
+            // 반지
+            PlayerPrefs.SetInt("ringNomalNum", ringNomalNum);
+            PlayerPrefs.SetInt("ringRareNum", ringRareNum);
+            PlayerPrefs.SetInt("ringUnipueNum", ringUnipueNum);
+            PlayerPrefs.SetInt("ringLegendNum", ringLegendNum);
+            PlayerPrefs.SetInt("ringEpicNum", ringEpicNum);
+
+            // 현재 장착중인 장비
+            PlayerPrefs.SetInt("currentWeapon", currentWeapon);
+            PlayerPrefs.SetInt("currentArmor", currentArmor);
+            PlayerPrefs.SetInt("currentRing", currentRing);
+
+            PlayerPrefs.Save();
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        // 무기
+        PlayerPrefs.SetInt("weaponNomalNum", weaponNomalNum);
+        PlayerPrefs.SetInt("weaponRareNum", weaponRareNum);
+        PlayerPrefs.SetInt("weaponUnipueNum", weaponUnipueNum);
+        PlayerPrefs.SetInt("weaponLegendNum", weaponLegendNum);
+        PlayerPrefs.SetInt("weaponEpicNum", weaponEpicNum);
+
+        // 방어구
+        PlayerPrefs.SetInt("armorNomalNum", armorNomalNum);
+        PlayerPrefs.SetInt("armorRareNum", armorRareNum);
+        PlayerPrefs.SetInt("armorUnipueNum", armorUnipueNum);
+        PlayerPrefs.SetInt("armorLegendNum", armorLegendNum);
+        PlayerPrefs.SetInt("armorEpicNum", armorEpicNum);
+
+        // 반지
+        PlayerPrefs.SetInt("ringNomalNum", ringNomalNum);
+        PlayerPrefs.SetInt("ringRareNum", ringRareNum);
+        PlayerPrefs.SetInt("ringUnipueNum", ringUnipueNum);
+        PlayerPrefs.SetInt("ringLegendNum", ringLegendNum);
+        PlayerPrefs.SetInt("ringEpicNum", ringEpicNum);
+
+        // 현재 장착중인 장비
+        PlayerPrefs.SetInt("currentWeapon", currentWeapon);
+        PlayerPrefs.SetInt("currentArmor", currentArmor);
+        PlayerPrefs.SetInt("currentRing", currentRing);
+
+        PlayerPrefs.Save();
+    }
+
 
     void Update()
     {

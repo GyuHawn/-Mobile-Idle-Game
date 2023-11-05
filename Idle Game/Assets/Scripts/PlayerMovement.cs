@@ -132,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("damege" + damege);
         // 키보드 총 발사
         /*if (Input.GetKeyDown(KeyCode.Space))
         {

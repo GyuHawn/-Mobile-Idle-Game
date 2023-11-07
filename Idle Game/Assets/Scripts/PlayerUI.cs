@@ -20,8 +20,11 @@ public class PlayerUI : MonoBehaviour
     
     void Update()
     {
-        currentMoney.text = playerMovement.money.ToString();
-        currentLevel.text = "Lv. " + playerMovement.level.ToString();
-        currentTotalPower.text = "Power. " + (playerMovement.totalPower - 356).ToString();  
+        if(currentMoney != null)
+        {
+            currentMoney.text = playerMovement.money.ToString();
+            currentLevel.text = "Lv. " + playerMovement.level.ToString();
+            currentTotalPower.text = "Power. " + (playerMovement.totalPower - 356).ToString();
+        }      
     }
 }

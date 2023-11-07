@@ -7,6 +7,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     private FixedJoystick joystick;
+    private MiniGameBoss miniGameboss;
 
     // 기본 체력 등..
     private float baseMaxHealth; // 체력
@@ -35,9 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     // 감지
     public Transform pos;
-    public Vector2 BoxSize;
+    public Vector2 boxSize;
     private Collider2D currentTarget;  // 현재 타겟
-    public GameObject gun;
 
     // 공격
     public GameObject bulletPrefab;
@@ -68,10 +68,14 @@ public class PlayerMovement : MonoBehaviour
     private float prevArmorDefense = 0;
     private float prevRingHealth = 0;
 
+    // 미니게임 입장
+    private bool miniGame = false;
+
     private Rigidbody2D rigib;
 
     private void Awake()
     {
+        miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>(); 
         rigib = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<FixedJoystick>();
 
@@ -98,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
 
         power = basePower; // 일단 몬스터 처리를 위한 선언
         StartCoroutine(AutoShoot());
+
+        miniGame = false;
     }
 
     private void OnApplicationPause(bool pauseStatus) // 어플이 정지될때 데이터 저장
@@ -126,13 +132,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 ShootBullet();
             }
-            yield return new WaitForSeconds(.5f); // 공격 속도 조절   
+            yield return new WaitForSeconds(0.5f); // 공격 속도 조절   
         }
     }
 
     private void Update()
     {
-        Debug.Log("damege" + damege);
         // 키보드 총 발사
         /*if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -224,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Collider2D GetRandomMonster()  // 랜덤 몬스터 추적
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, BoxSize, 0f);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, boxSize, 0f);
 
         List<Collider2D> monsters = new List<Collider2D>();
 
@@ -315,6 +320,33 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (miniGame)
+        {
+            if (collision.gameObject.CompareTag("BossSkill"))
+            {
+                Debug.Log("aaaaaaaa");
+                currentHealth -= miniGameboss.damage;
+            }
+        }
+    }
+
+    public void Mini() // 입장 버튼에사용 하고 추가 데미지 변수를 추가할지 생각
+    {
+        miniGame = true;
+        StartCoroutine(IncreaseDamageOverTime());
+    }
+
+    IEnumerator IncreaseDamageOverTime()
+    {
+        while (miniGame)
+        {
+            yield return new WaitForSeconds(10f);
+            miniGameboss.damage += 5;
+        }
+    }
+
     public void Skill1()
     {
         if (skill1Time <= 0)
@@ -383,9 +415,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(pos.position, BoxSize);
-    }*/
+        Gizmos.DrawWireCube(pos.position, boxSize);
+    }
 }

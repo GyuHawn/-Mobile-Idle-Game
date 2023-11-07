@@ -26,7 +26,7 @@ public class MonsterScript : MonoBehaviour
 
     // 감지
     public Transform pos;
-    public Vector2 BoxSize;
+    public Vector2 boxSize;
     public LayerMask playerLayer;
 
     // 이동
@@ -77,7 +77,7 @@ public class MonsterScript : MonoBehaviour
         damege = playerMovement.power - defense;
 
 
-        Collider2D playerInBox = Physics2D.OverlapBox(pos.position, BoxSize, 0f, playerLayer);
+        Collider2D playerInBox = Physics2D.OverlapBox(pos.position, boxSize, 0f, playerLayer);
         if (playerInBox != null)
         {
             Vector3 direction = (playerInBox.transform.position - transform.position).normalized;

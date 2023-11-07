@@ -16,6 +16,7 @@ TagManager:
   - Unique
   - Legend
   - Epic
+  - BossSkill
   layers:
   - Default
   - TransparentFX
@@ -28,8 +29,8 @@ TagManager:
   - Bullet
   - Skill1
   - Boss
-  - 
-  - 
+  - Wall
+  - BossSkill
   - 
   - 
   - 

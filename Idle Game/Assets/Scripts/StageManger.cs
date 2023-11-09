@@ -18,7 +18,9 @@ public class StageManger : MonoBehaviour
     // 스테이지 등반, 반복
     public GameObject go;
     public GameObject stop;
-    public bool isGo; 
+    public bool isGo;
+
+    public bool restartStage = false; // 스테이지 재시작 여부
 
     void Awake()
     {
@@ -48,9 +50,16 @@ public class StageManger : MonoBehaviour
         StartCoroutine(StartSpawningMonsters());
     }
 
-    IEnumerator StartSpawningMonsters()
+    public IEnumerator StartSpawningMonsters()
     {
         yield return new WaitForSeconds(3f); // 게임 시작 후 3초 대기
+
+        if (restartStage)
+        {
+            deadMonster = 0;
+            mSpwan.spwanMonster = 10;
+            restartStage = false;
+        }
     }
 
     void Update()
@@ -92,10 +101,12 @@ public class StageManger : MonoBehaviour
 
                 // 스테이지 클리어 처리
                 stageCleared = true;
+
+                restartStage = true; // 스테이지 재시작 설정
+                StartCoroutine(StartSpawningMonsters()); // 스테이지 재시작
             }
         }
     }
-
 
     public void StageStop()
     {

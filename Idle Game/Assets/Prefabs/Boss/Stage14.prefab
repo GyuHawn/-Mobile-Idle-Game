@@ -200,7 +200,7 @@ MonoBehaviour:
   power: 0
   defense: 0
   pos: {fileID: 7650701860871445731}
-  BoxSize: {x: 60, y: 40}
+  boxSize: {x: 60, y: 40}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64

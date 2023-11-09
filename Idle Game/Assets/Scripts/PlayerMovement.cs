@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private FixedJoystick joystick;
     private MiniGameBoss miniGameboss;
+    private MiniGameScript miniGameScript;
 
     // 기본 체력 등..
     private float baseMaxHealth; // 체력
@@ -75,7 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>(); 
+        miniGameScript = GameObject.Find("Manager").GetComponent<MiniGameScript>();
+
         rigib = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<FixedJoystick>();
 
@@ -105,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
         miniGame = false;
     }
-
+     
     private void OnApplicationPause(bool pauseStatus) // 어플이 정지될때 데이터 저장
     {
         if (pauseStatus)
@@ -263,10 +265,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead && currentHealth <= 0)
         {
+            miniGameScript.gameStarted = false;
             isDead = true;
             transform.position = new Vector2(0, 0);
             MonsterSpwan spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
             StageManger stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
+            miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
+            miniGameboss.hitDamageUI.SetActive(false);
+            miniGameboss.hitDamege = 0;
             if (spawner != null)
             {
                 spawner.RemoveAllMonsters();
@@ -324,9 +330,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (miniGame)
         {
+            miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
             if (collision.gameObject.CompareTag("BossSkill"))
             {
-                Debug.Log("aaaaaaaa");
                 currentHealth -= miniGameboss.damage;
             }
         }

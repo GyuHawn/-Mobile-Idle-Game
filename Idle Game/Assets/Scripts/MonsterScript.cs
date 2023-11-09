@@ -140,9 +140,9 @@ public class MonsterScript : MonoBehaviour
         }     
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(pos.position, BoxSize);
-    }*/
+        Gizmos.DrawWireCube(pos.position, boxSize);
+    }
 }

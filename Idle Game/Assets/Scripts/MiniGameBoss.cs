@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class MiniGameBoss : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+    private MiniGameScript miniGameScript;
+
     public float damage = 10;
 
     // 스킬 프리팹
@@ -18,13 +23,44 @@ public class MiniGameBoss : MonoBehaviour
     private int currentSkillIndex1 = 0;
     private int currentSkillIndex2 = 0;
 
+    // 입은 데미지
+    public float hitDamege;
+    public GameObject hitDamageUI;
+    public TMP_Text hitDamegeText;
+
+    // 남은 시간 
+    public float remainingTime;
+    public TMP_Text remainingTimeText;
+
     private Animator anim;
 
     private void Start()
     {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        miniGameScript = GameObject.Find("Manager").GetComponent<MiniGameScript>();
+
         anim = GetComponent<Animator>();
 
+        remainingTime = 60;
         StartCoroutine(SelectPattern());
+    }
+
+    private void Update()
+    {
+        if (miniGameScript.gameStarted)
+        {
+            if(hitDamege >= 0)
+            {
+                hitDamageUI.SetActive(true);
+                hitDamegeText.text = "획득머니 : " + ((int)hitDamege / 10).ToString();
+                remainingTimeText.text = "남은시간 : " + ((int)remainingTime).ToString();
+            }
+        }
+        else 
+        {
+            hitDamege = 0;
+            hitDamageUI.SetActive(false);
+        }
     }
 
     IEnumerator SelectPattern()
@@ -151,6 +187,20 @@ public class MiniGameBoss : MonoBehaviour
                 break;
             }
             yield return null;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            hitDamege += playerMovement.power;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Skill1"))
+        {
+            hitDamege += playerMovement.skillPower;
         }
     }
 }

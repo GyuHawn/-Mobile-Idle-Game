@@ -118,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("money", money);
         }
     }
+
     private void OnApplicationQuit() // 어플 종료시 데이터 저장
     {
         PlayerPrefs.SetInt("upgradeHealth", upgradeHealth);

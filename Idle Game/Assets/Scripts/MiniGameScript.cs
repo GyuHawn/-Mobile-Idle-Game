@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class MiniGameScript : MonoBehaviour
 {
@@ -8,7 +10,18 @@ public class MiniGameScript : MonoBehaviour
     private StageManger stageManager;
     private MonsterSpwan monsterSpwan;
 
+    // 미니게임 입장 횟수
+    public int ticket;
+    public float plusTicket = 60;
+    public TMP_Text ticketText;
+
+    // 보스 오브젝트
+    public GameObject boss;
+
     // 미니게임 메뉴
+    public GameObject miniGameSelectMenu;
+    // 미니게임 종료 메뉴
+    public GameObject endMiniGame;
     public GameObject miniGameMenu;
 
     // 미니게임 맵
@@ -19,49 +32,93 @@ public class MiniGameScript : MonoBehaviour
 
     // 게임 시간
     public float gameTime;
-    private float timer;
 
-    public bool gameStarted;
+    public bool miniGameStart;
 
     void Start()
     {
-        gameStarted = false;
+        miniGameStart = false;
 
         stageManager = FindObjectOfType<StageManger>();
         monsterSpwan = FindObjectOfType<MonsterSpwan>();
-        
+
     }
 
     void Update()
     {
-        if (gameStarted)
+        if (miniGameStart)
         {
-            miniGameBoss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
-            miniGameBoss.remainingTime -= Time.deltaTime;
-            if (miniGameBoss.remainingTime <= 0)
+            if (miniGameBoss == null)
             {
-                GameObject player = GameObject.Find("Player");
-                player.transform.position = new Vector2(0, 0);
-                miniGame.SetActive(false);
-                gameStarted = false;
+                miniGameBoss = GameObject.Find("Penguin")?.GetComponent<MiniGameBoss>();
+            }
+            if (miniGameBoss != null)
+            {
+                miniGameBoss.remainingTime -= Time.deltaTime;
+                if (miniGameBoss.remainingTime <= 0)
+                {
+                    endMiniGame.SetActive(true);
+                    boss.SetActive(false);
+                }
+            }
+        }
 
-                // 스테이지 재시작 부분
-                stageManager.restartStage = true;
-                monsterSpwan.RemoveAllMonsters();
-                stageManager.StartCoroutine(stageManager.StartSpawningMonsters());
+        ticketText.text = "입장권 : " + ticket;
+
+        if (ticket <= 1)
+        {
+            plusTicket -= Time.deltaTime;
+            if(plusTicket <= 0)
+            {
+                ticket++;
+                plusTicket = 60;
             }
         }
     }
 
     public void OnMiniGame()
     {
-        miniGame.SetActive(true);
+        if (ticket > 0)
+        {
+            miniGame.SetActive(true);
+            GameObject player = GameObject.Find("Player");
+            player.transform.position = playerMovePoint.transform.position;
+            miniGameStart = true;
+            miniGameSelectMenu.SetActive(false);
+
+            miniGameBoss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
+            miniGameBoss.remainingTime = 60;
+
+            // 입장권 제거
+            ticket--;
+        }
+    }
+
+    public void EndMiniGame()
+    {
         GameObject player = GameObject.Find("Player");
-        player.transform.position = playerMovePoint.transform.position;
-        gameStarted = true;
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+
+        // 미니게임 종료
+        playerMovement.miniGame = false;
+        miniGameStart = false;
+
+        // UI 비활성화
+        miniGame.SetActive(false);
+        endMiniGame.SetActive(false);
         miniGameMenu.SetActive(false);
 
-        miniGameBoss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
-        miniGameBoss.remainingTime = 60;
+        // 플레이어 이동
+        player.transform.position = new Vector2(0, 0);
+        playerMovement.currentTarget = null;
+
+        // 스테이지 재시작
+        stageManager.restartStage = true;
+        monsterSpwan.RemoveAllMonsters();
+        stageManager.EndMiniGameSpawningMonsters();
+
+        // 플레이어 돈 획득
+        playerMovement.money += (int)miniGameBoss.hitDamege / 10;
+
     }
 }

@@ -62,6 +62,16 @@ public class StageManger : MonoBehaviour
         }
     }
 
+    public void EndMiniGameSpawningMonsters() // 미니게임 종료후 다시 설정
+    {
+        if (restartStage)
+        {
+            deadMonster = 0;
+            mSpwan.spwanMonster = 10;
+            restartStage = false;
+        }
+    }
+
     void Update()
     {
         maxStageText.text = "Max Stage : " + maxStage;

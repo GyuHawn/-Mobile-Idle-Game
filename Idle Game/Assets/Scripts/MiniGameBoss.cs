@@ -41,13 +41,13 @@ public class MiniGameBoss : MonoBehaviour
 
         anim = GetComponent<Animator>();
 
-        remainingTime = 60;
+        remainingTime = 10;
         StartCoroutine(SelectPattern());
     }
 
     private void Update()
     {
-        if (miniGameScript.gameStarted)
+        if (miniGameScript.miniGameStart)
         {
             if(hitDamege >= 0)
             {
@@ -67,7 +67,7 @@ public class MiniGameBoss : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
 
             int pattern = Random.Range(0, 3);
             switch (pattern)
@@ -90,18 +90,19 @@ public class MiniGameBoss : MonoBehaviour
         anim.SetBool("Attack", true);
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("Attack", false);
+
         while (true)
         {
             yield return new WaitForSeconds(1f);
 
             if (currentSkillIndex1 < skillPoint1.Length)
             {
-                StartCoroutine(ActivateEnermy(skillEnermy1[currentSkillIndex1], 0.5f));
+                StartCoroutine(ActEnermy(skillEnermy1[currentSkillIndex1], 0.5f));
 
                 GameObject skill = Instantiate(skill1, skillPoint1[currentSkillIndex1].transform.position, Quaternion.Euler(0, 180, 0));
                 skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
 
-                StartCoroutine(DestroyAfterReach(skill, -10));
+                StartCoroutine(DestroyAftereach(skill, -10));
 
                 currentSkillIndex1++;
             }
@@ -110,12 +111,12 @@ public class MiniGameBoss : MonoBehaviour
 
             if (currentSkillIndex2 < skillPoint2.Length)
             {
-                StartCoroutine(ActivateEnermy(skillEnermy2[currentSkillIndex2], 0.5f));
+                StartCoroutine(ActEnermy(skillEnermy2[currentSkillIndex2], 0.5f));
 
                 GameObject skill = Instantiate(skill1, skillPoint2[currentSkillIndex2].transform.position, Quaternion.identity);
                 skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
 
-                StartCoroutine(DestroyAfterReach(skill, 10));
+                StartCoroutine(DestroyAftereach(skill, 10));
 
                 currentSkillIndex2++;
             }
@@ -131,17 +132,19 @@ public class MiniGameBoss : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             int randomIndex1 = Random.Range(0, skillPoint1.Length);
-            StartCoroutine(ActivateEnermy(skillEnermy1[randomIndex1], 0.5f));
+            StartCoroutine(ActEnermy(skillEnermy1[randomIndex1], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint1[randomIndex1].transform.position, Quaternion.Euler(0, 180, 0));
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
-            StartCoroutine(DestroyAfterReach(skill, -10));
+            StartCoroutine(DestroyAftereach(skill, -10));
+
             yield return new WaitForSeconds(1f);
 
             int randomIndex2 = Random.Range(0, skillPoint2.Length);
-            StartCoroutine(ActivateEnermy(skillEnermy2[randomIndex2], 0.5f));
+            StartCoroutine(ActEnermy(skillEnermy2[randomIndex2], 0.5f));
             skill = Instantiate(skill1, skillPoint2[randomIndex2].transform.position, Quaternion.identity);
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
-            StartCoroutine(DestroyAfterReach(skill, 10));
+            StartCoroutine(DestroyAftereach(skill, 10));
+
             yield return new WaitForSeconds(1f);
         }
     }
@@ -155,29 +158,31 @@ public class MiniGameBoss : MonoBehaviour
 
         for (int i = 0; i < skillPoint1.Length; i++)
         {
-            StartCoroutine(ActivateEnermy(skillEnermy1[i], 0.5f));
+            StartCoroutine(ActEnermy(skillEnermy1[i], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint1[i].transform.position, Quaternion.Euler(0, 180, 0));
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
-            StartCoroutine(DestroyAfterReach(skill, -10));
+            StartCoroutine(DestroyAftereach(skill, -10));
         }
+
         yield return new WaitForSeconds(2f);
+
         for (int i = 0; i < skillPoint2.Length; i++)
         {
-            StartCoroutine(ActivateEnermy(skillEnermy2[i], 0.5f));
+            StartCoroutine(ActEnermy(skillEnermy2[i], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint2[i].transform.position, Quaternion.identity);
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
-            StartCoroutine(DestroyAfterReach(skill, 10));
+            StartCoroutine(DestroyAftereach(skill, 10));
         }
     }
 
-    IEnumerator ActivateEnermy(GameObject enermy, float time)
+    IEnumerator ActEnermy(GameObject enermy, float time)
     {
         enermy.SetActive(true);
         yield return new WaitForSeconds(time);
         enermy.SetActive(false);
     }
 
-    IEnumerator DestroyAfterReach(GameObject skill, float x)
+    IEnumerator DestroyAftereach(GameObject skill, float x)
     {
         while (true)
         {

@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     // 감지
     public Transform pos;
     public Vector2 boxSize;
-    private Collider2D currentTarget;  // 현재 타겟
+    public Collider2D currentTarget;  // 현재 타겟
 
     // 공격
     public GameObject bulletPrefab;
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     private float prevRingHealth = 0;
 
     // 미니게임 입장
-    private bool miniGame = false;
+    public bool miniGame = false;
 
     private Rigidbody2D rigib;
 
@@ -236,11 +236,13 @@ public class PlayerMovement : MonoBehaviour
         List<Collider2D> monsters = new List<Collider2D>();
 
         foreach (Collider2D collider in colliders)
+        {
             if (collider.CompareTag("Monster") || collider.CompareTag("Boss"))
             {
                 monsters.Add(collider);
             }
-
+        }
+            
         return monsters.Count > 0 ? monsters[Random.Range(0, monsters.Count)] : null;
     }
 
@@ -265,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDead && currentHealth <= 0)
         {
-            miniGameScript.gameStarted = false;
+            miniGameScript.miniGameStart = false;
             isDead = true;
             transform.position = new Vector2(0, 0);
             MonsterSpwan spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
@@ -330,17 +332,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if (miniGame)
         {
-            miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
-            if (collision.gameObject.CompareTag("BossSkill"))
+            if (miniGameboss == null)
             {
-                currentHealth -= miniGameboss.damage;
+                miniGameboss = GameObject.Find("Penguin")?.GetComponent<MiniGameBoss>();
             }
+            if (miniGameboss != null)
+            {
+                if (collision.gameObject.CompareTag("BossSkill"))
+                {
+                    currentHealth -= miniGameboss.damage;
+                }
+            }
+
         }
     }
 
-    public void Mini() // 입장 버튼에사용 하고 추가 데미지 변수를 추가할지 생각
+    public void Mini()
     {
         miniGame = true;
+        currentTarget = null;
         StartCoroutine(IncreaseDamageOverTime());
     }
 

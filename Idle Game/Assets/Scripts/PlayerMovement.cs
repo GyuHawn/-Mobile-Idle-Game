@@ -7,7 +7,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     private FixedJoystick joystick;
-    private MiniGameBoss miniGameboss;
+    private MiniGameBoss miniGameBoss;
     private MiniGameScript miniGameScript;
 
     // 기본 체력 등..
@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
 
     // 미니게임 입장
     public bool miniGame = false;
+    public GameObject miniGameMoney;
+    public TMP_Text miniGamePlayerDie;
 
     private Rigidbody2D rigib;
 
@@ -238,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("Monster") || collider.CompareTag("Boss"))
+            if (collider.CompareTag("Monster") || collider.CompareTag("Boss") || collider.CompareTag("MiniGame"))
             {
                 monsters.Add(collider);
             }
@@ -250,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsValidTarget(Collider2D target) // 몬스터 감지
     {
         // 타겟이 null 이거나 Monster 태그가 없으면 false 반환
-        return target != null && (target.CompareTag("Monster") || target.CompareTag("Boss"));
+        return target != null && (target.CompareTag("Monster") || target.CompareTag("Boss") || target.CompareTag("MiniGame"));
     }
 
     private void ShootBullet() // 사격
@@ -266,31 +268,61 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (!isDead && currentHealth <= 0)
+        if ((!isDead && currentHealth <= 0) && !miniGame)
         {
             miniGameScript.miniGameStart = false;
             isDead = true;
             transform.position = new Vector2(0, 0);
             MonsterSpwan spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
             StageManger stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
-            miniGameboss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
-            miniGameboss.hitDamageUI.SetActive(false);
-            miniGameboss.hitDamege = 0;
+
             if (spawner != null)
             {
                 spawner.RemoveAllMonsters();
             }
+
             stageManger.deadMonster = 0;
-            SetStats();
+            currentHealth = maxHealth;
             isDead = false;
+        }
+        if ((!isDead && currentHealth <= 0) && miniGame)
+        {
+            if (miniGameBoss != null)
+            {
+                miniGameMoney.SetActive(true);
+                isDead = true;
+
+                miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
+                miniGameBoss.hitDamageUI.SetActive(false);
+
+                miniGame = false;
+                miniGameScript.miniGameStart = false;
+
+                miniGamePlayerDie.text = "+" + ((int)miniGameBoss.hitDamege / 10).ToString();
+                money += (int)miniGameBoss.hitDamege / 10;
+
+                transform.position = new Vector2(0, 0);
+                isDead = false;
+
+                // 보스 상태 초기화
+                miniGameScript.BossReset();
+
+                StartCoroutine(MiniGameDieMoney());
+
+            }
         }
     }
 
+    IEnumerator MiniGameDieMoney()
+    {
+        yield return new WaitForSeconds(1f);
+        miniGameMoney.SetActive(false);
+    }
+
     public void SetStats()
-    {       
+    {
         level = (upgradeHealth + upgradePower + upgradeDefense) - 2;
-        maxHealth = baseMaxHealth + upgradeHealth;
-        currentHealth = maxHealth;
+        maxHealth = baseMaxHealth + upgradeHealth;  // 최대 체력만 증가
         power = basePower + upgradePower;
         defense = baseDefense + upgradeDefense;
         totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
@@ -317,7 +349,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss"))
+        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss") || collision.gameObject.CompareTag("MiniGame"))
         {
             MonsterScript monsterScript = collision.gameObject.GetComponent<MonsterScript>();
 
@@ -333,15 +365,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (miniGame)
         {
-            if (miniGameboss == null)
+            if (miniGameBoss == null)
             {
-                miniGameboss = GameObject.Find("Penguin")?.GetComponent<MiniGameBoss>();
+                miniGameBoss = GameObject.Find("MiniGameBoss")?.GetComponent<MiniGameBoss>();
             }
-            if (miniGameboss != null)
+            if (miniGameBoss != null)
             {
                 if (collision.gameObject.CompareTag("BossSkill"))
                 {
-                    currentHealth -= miniGameboss.damage;
+                    currentHealth -= miniGameBoss.damage;
                 }
             }
 
@@ -360,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
         while (miniGame)
         {
             yield return new WaitForSeconds(10f);
-            miniGameboss.damage += 5;
+            miniGameBoss.damage += 5;
         }
     }
 

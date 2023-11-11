@@ -17,6 +17,7 @@ TagManager:
   - Legend
   - Epic
   - BossSkill
+  - MiniGame
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Boss
   - Wall
   - BossSkill
-  - 
+  - MiniGame
   - 
   - 
   - 

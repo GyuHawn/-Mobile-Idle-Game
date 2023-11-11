@@ -50,14 +50,22 @@ public class MiniGameScript : MonoBehaviour
         {
             if (miniGameBoss == null)
             {
-                miniGameBoss = GameObject.Find("Penguin")?.GetComponent<MiniGameBoss>();
+                miniGameBoss = GameObject.Find("MiniGameBoss")?.GetComponent<MiniGameBoss>();
             }
             if (miniGameBoss != null)
             {
                 miniGameBoss.remainingTime -= Time.deltaTime;
                 if (miniGameBoss.remainingTime <= 0)
                 {
+                    miniGameBoss.hitDamege = 0;
                     endMiniGame.SetActive(true);
+
+                    foreach (GameObject skill in miniGameBoss.skills)
+                    {
+                        Destroy(skill);
+                    }
+                    miniGameBoss.skills.Clear();
+
                     boss.SetActive(false);
                 }
             }
@@ -80,17 +88,20 @@ public class MiniGameScript : MonoBehaviour
     {
         if (ticket > 0)
         {
-            miniGame.SetActive(true);
-            GameObject player = GameObject.Find("Player");
-            player.transform.position = playerMovePoint.transform.position;
-            miniGameStart = true;
-            miniGameSelectMenu.SetActive(false);
+            if (!miniGameStart)
+            {
+                miniGame.SetActive(true);
+                GameObject player = GameObject.Find("Player");
+                player.transform.position = playerMovePoint.transform.position;
+                miniGameStart = true;
+                miniGameSelectMenu.SetActive(false);
 
-            miniGameBoss = GameObject.Find("Penguin").GetComponent<MiniGameBoss>();
-            miniGameBoss.remainingTime = 60;
+                miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
+                miniGameBoss.remainingTime = 60;
 
-            // 입장권 제거
-            ticket--;
+                // 입장권 제거
+                ticket--;
+            }
         }
     }
 
@@ -103,8 +114,7 @@ public class MiniGameScript : MonoBehaviour
         playerMovement.miniGame = false;
         miniGameStart = false;
 
-        // UI 비활성화
-        miniGame.SetActive(false);
+        // UI 비활성화 
         endMiniGame.SetActive(false);
         miniGameMenu.SetActive(false);
 
@@ -120,5 +130,28 @@ public class MiniGameScript : MonoBehaviour
         // 플레이어 돈 획득
         playerMovement.money += (int)miniGameBoss.hitDamege / 10;
 
+        // 보스 상태 초기화
+        BossReset();
+    }
+
+    public void BossReset()
+    {
+        if (miniGameBoss != null)
+        {
+            // 보스 상태 초기화
+            miniGameBoss.StopAllCoroutines();
+
+            foreach (GameObject skill in miniGameBoss.skills)
+            {
+                Destroy(skill);
+            }
+
+            miniGameBoss.skills.Clear();
+            miniGameBoss.currentSkillIndex1 = 0;
+            miniGameBoss.currentSkillIndex2 = 0;
+            miniGameBoss.hitDamege = 0;
+
+            miniGame.SetActive(false);
+        }
     }
 }

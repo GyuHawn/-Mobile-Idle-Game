@@ -7,7 +7,9 @@ using TMPro;
 
 public class StageManger : MonoBehaviour
 {
-    private MonsterSpwan mSpwan;
+    private PlayerMovement playerMovement;
+    private MonsterSpwan monsterSpwan;
+
     public int stage; // 현재 스테이지
     public int maxStage; // 최대 스테이지
     public TMP_Text maxStageText;
@@ -24,6 +26,9 @@ public class StageManger : MonoBehaviour
 
     void Awake()
     {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        monsterSpwan = GetComponent<MonsterSpwan>();
+
         stage = PlayerPrefs.GetInt("stage", 1);
         maxStage = PlayerPrefs.GetInt("maxStage", 1);
 
@@ -45,8 +50,7 @@ public class StageManger : MonoBehaviour
 
 
     void Start()
-    {
-        mSpwan = GetComponent<MonsterSpwan>();
+    {      
         StartCoroutine(StartSpawningMonsters());
     }
 
@@ -57,7 +61,7 @@ public class StageManger : MonoBehaviour
         if (restartStage)
         {
             deadMonster = 0;
-            mSpwan.spwanMonster = 10;
+            monsterSpwan.spwanMonster = 10;
             restartStage = false;
         }
     }
@@ -67,7 +71,7 @@ public class StageManger : MonoBehaviour
         if (restartStage)
         {
             deadMonster = 0;
-            mSpwan.spwanMonster = 10;
+            monsterSpwan.spwanMonster = 10;
             restartStage = false;
         }
     }
@@ -87,14 +91,14 @@ public class StageManger : MonoBehaviour
 
         if (!stageCleared) // 스테이지가 클리어되지 않았을 때만 실행
         {
-            if (mSpwan.spwanMonster == 0 && mSpwan.activeMonsters == 0)
+            if (monsterSpwan.spwanMonster == 0 && monsterSpwan.activeMonsters == 0)
             {
-                mSpwan.spwanMonster = 10;
+                monsterSpwan.spwanMonster = 10;
             }
         }
         if (stageCleared)
         {
-            if (mSpwan.spwanMonster == 0 && mSpwan.activeMonsters == 0)
+            if (monsterSpwan.spwanMonster == 0 && monsterSpwan.activeMonsters == 0)
             {
                 if (isGo)
                 {
@@ -106,11 +110,13 @@ public class StageManger : MonoBehaviour
                         maxStage = stage;
                     }
                 }
+
                 deadMonster = 0;
-                mSpwan.spwanMonster = 10;
+                monsterSpwan.spwanMonster = 10;
 
                 // 스테이지 클리어 처리
                 stageCleared = true;
+                playerMovement.currentHealth = playerMovement.maxHealth;
 
                 restartStage = true; // 스테이지 재시작 설정
                 StartCoroutine(StartSpawningMonsters()); // 스테이지 재시작

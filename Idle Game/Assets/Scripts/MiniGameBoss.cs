@@ -12,6 +12,7 @@ public class MiniGameBoss : MonoBehaviour
     public float damage = 10;
 
     // 스킬 프리팹
+    public List<GameObject> skills = new List<GameObject>(); // 생성된 스킬;
     public GameObject skill1;
 
     // 스킬 발사
@@ -20,8 +21,8 @@ public class MiniGameBoss : MonoBehaviour
     public GameObject[] skillPoint2;
     public GameObject[] skillEnermy2;
 
-    private int currentSkillIndex1 = 0;
-    private int currentSkillIndex2 = 0;
+    public int currentSkillIndex1 = 0;
+    public int currentSkillIndex2 = 0;
 
     // 입은 데미지
     public float hitDamege;
@@ -101,9 +102,7 @@ public class MiniGameBoss : MonoBehaviour
 
                 GameObject skill = Instantiate(skill1, skillPoint1[currentSkillIndex1].transform.position, Quaternion.Euler(0, 180, 0));
                 skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
-
-                StartCoroutine(DestroyAftereach(skill, -10));
-
+                skills.Add(skill);
                 currentSkillIndex1++;
             }
 
@@ -115,9 +114,7 @@ public class MiniGameBoss : MonoBehaviour
 
                 GameObject skill = Instantiate(skill1, skillPoint2[currentSkillIndex2].transform.position, Quaternion.identity);
                 skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
-
-                StartCoroutine(DestroyAftereach(skill, 10));
-
+                skills.Add(skill);
                 currentSkillIndex2++;
             }
         }
@@ -135,16 +132,14 @@ public class MiniGameBoss : MonoBehaviour
             StartCoroutine(ActEnermy(skillEnermy1[randomIndex1], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint1[randomIndex1].transform.position, Quaternion.Euler(0, 180, 0));
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
-            StartCoroutine(DestroyAftereach(skill, -10));
-
+            skills.Add(skill);
             yield return new WaitForSeconds(1f);
 
             int randomIndex2 = Random.Range(0, skillPoint2.Length);
             StartCoroutine(ActEnermy(skillEnermy2[randomIndex2], 0.5f));
             skill = Instantiate(skill1, skillPoint2[randomIndex2].transform.position, Quaternion.identity);
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
-            StartCoroutine(DestroyAftereach(skill, 10));
-
+            skills.Add(skill);
             yield return new WaitForSeconds(1f);
         }
     }
@@ -161,7 +156,7 @@ public class MiniGameBoss : MonoBehaviour
             StartCoroutine(ActEnermy(skillEnermy1[i], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint1[i].transform.position, Quaternion.Euler(0, 180, 0));
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(-5, 0);
-            StartCoroutine(DestroyAftereach(skill, -10));
+            skills.Add(skill);
         }
 
         yield return new WaitForSeconds(2f);
@@ -171,7 +166,7 @@ public class MiniGameBoss : MonoBehaviour
             StartCoroutine(ActEnermy(skillEnermy2[i], 0.5f));
             GameObject skill = Instantiate(skill1, skillPoint2[i].transform.position, Quaternion.identity);
             skill.GetComponent<Rigidbody2D>().velocity = new Vector2(5, 0);
-            StartCoroutine(DestroyAftereach(skill, 10));
+            skills.Add(skill);
         }
     }
 
@@ -182,18 +177,6 @@ public class MiniGameBoss : MonoBehaviour
         enermy.SetActive(false);
     }
 
-    IEnumerator DestroyAftereach(GameObject skill, float x)
-    {
-        while (true)
-        {
-            if ((x < 0 && skill.transform.position.x <= x) || (x > 0 && skill.transform.position.x >= x))
-            {
-                Destroy(skill);
-                break;
-            }
-            yield return null;
-        }
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))

@@ -46,10 +46,12 @@ public class StageSelect : MonoBehaviour
 
             stageManager.stage = stageNumber;
             stageManager.deadMonster = 0; // 죽은 몬스터 수 초기화
+            monsterSpwan.spwanMonster = 10; // 생성해야 할 몬스터 수 초기화
 
             monsterSpwan.RemoveAllMonsters();
         }
     }
+
 
 
 }

@@ -293,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
                 isDead = true;
 
                 miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
-                miniGameBoss.hitDamageUI.SetActive(false);
+                miniGameScript.hitDamageUI.SetActive(false);
 
                 miniGame = false;
                 miniGameScript.miniGameStart = false;
@@ -305,7 +305,7 @@ public class PlayerMovement : MonoBehaviour
                 isDead = false;
 
                 // 보스 상태 초기화
-                miniGameScript.BossReset();
+                //miniGameScript.BossReset();
 
                 StartCoroutine(MiniGameDieMoney());
 
@@ -345,6 +345,9 @@ public class PlayerMovement : MonoBehaviour
         power += newWeaponPower;
         defense += newArmorDefense;
         maxHealth += newRingHealth;
+
+        // 전체 투력 적용
+        totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

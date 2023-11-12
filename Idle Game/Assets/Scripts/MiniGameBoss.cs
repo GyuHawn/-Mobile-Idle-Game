@@ -26,12 +26,12 @@ public class MiniGameBoss : MonoBehaviour
 
     // 입은 데미지
     public float hitDamege;
-    public GameObject hitDamageUI;
-    public TMP_Text hitDamegeText;
+    //public GameObject hitDamageUI;
+    //public TMP_Text hitDamegeText;
 
     // 남은 시간 
-    public float remainingTime;
-    public TMP_Text remainingTimeText;
+   // public float remainingTime;
+    //public TMP_Text remainingTimeText;
 
     private Animator anim;
 
@@ -42,7 +42,27 @@ public class MiniGameBoss : MonoBehaviour
 
         anim = GetComponent<Animator>();
 
-        remainingTime = 10;
+        // 스킬 사용위치 할당
+        skillPoint1 = new GameObject[3];
+        skillPoint1[0] = GameObject.Find("SkillPoint1");
+        skillPoint1[1] = GameObject.Find("SkillPoint2");
+        skillPoint1[2] = GameObject.Find("SkillPoint3");
+
+        skillPoint2 = new GameObject[2];
+        skillPoint2[0] = GameObject.Find("SkillPoint4");
+        skillPoint2[1] = GameObject.Find("SkillPoint5");
+
+        // 스킬 위헙지역 할당
+        skillEnermy1 = new GameObject[3];
+        skillEnermy1[0] = GameObject.Find("Skill1Enermy");
+        skillEnermy1[1] = GameObject.Find("Skill2Enermy");
+        skillEnermy1[2] = GameObject.Find("Skill3Enermy");
+
+        skillEnermy2 = new GameObject[2];
+        skillEnermy2[0] = GameObject.Find("Skill4Enermy");
+        skillEnermy2[1] = GameObject.Find("Skill5Enermy");
+
+        miniGameScript.remainingTime = 10;
         StartCoroutine(SelectPattern());
     }
 
@@ -52,15 +72,15 @@ public class MiniGameBoss : MonoBehaviour
         {
             if(hitDamege >= 0)
             {
-                hitDamageUI.SetActive(true);
-                hitDamegeText.text = "획득머니 : " + ((int)hitDamege / 10).ToString();
-                remainingTimeText.text = "남은시간 : " + ((int)remainingTime).ToString();
+                miniGameScript.hitDamageUI.SetActive(true);
+                miniGameScript.hitDamegeText.text = "획득머니 : " + ((int)hitDamege / 10).ToString();
+                miniGameScript.remainingTimeText.text = "남은시간 : " + ((int)miniGameScript.remainingTime).ToString();
             }
         }
         else 
         {
             hitDamege = 0;
-            hitDamageUI.SetActive(false);
+            miniGameScript.hitDamageUI.SetActive(false);
         }
     }
 
@@ -172,9 +192,17 @@ public class MiniGameBoss : MonoBehaviour
 
     IEnumerator ActEnermy(GameObject enermy, float time)
     {
-        enermy.SetActive(true);
-        yield return new WaitForSeconds(time);
-        enermy.SetActive(false);
+        SpriteRenderer sprRenderer = enermy.GetComponent<SpriteRenderer>();
+        if (sprRenderer != null)
+        {
+            sprRenderer.enabled = true;
+            yield return new WaitForSeconds(time);
+            sprRenderer.enabled = false;
+        }
+        else
+        {
+            Debug.LogError("SpriteRenderer가 " + enermy.name + "에 없습니다.");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

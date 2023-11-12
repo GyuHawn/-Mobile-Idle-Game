@@ -17,6 +17,8 @@ public class MiniGameScript : MonoBehaviour
 
     // 보스 오브젝트
     public GameObject boss;
+    // 보스 소환 위치
+    public GameObject bossPoint;
 
     // 미니게임 메뉴
     public GameObject miniGameSelectMenu;
@@ -32,6 +34,13 @@ public class MiniGameScript : MonoBehaviour
 
     // 게임 시간
     public float gameTime;
+
+    // 데미지 UI
+    public GameObject hitDamageUI;
+    public TMP_Text hitDamegeText;
+    // 남은 시간 
+    public float remainingTime;
+    public TMP_Text remainingTimeText;
 
     public bool miniGameStart;
 
@@ -54,10 +63,9 @@ public class MiniGameScript : MonoBehaviour
             }
             if (miniGameBoss != null)
             {
-                miniGameBoss.remainingTime -= Time.deltaTime;
-                if (miniGameBoss.remainingTime <= 0)
+                remainingTime -= Time.deltaTime;
+                if (remainingTime <= 0)
                 {
-                    miniGameBoss.hitDamege = 0;
                     endMiniGame.SetActive(true);
 
                     foreach (GameObject skill in miniGameBoss.skills)
@@ -90,14 +98,16 @@ public class MiniGameScript : MonoBehaviour
         {
             if (!miniGameStart)
             {
-                miniGame.SetActive(true);
+                boss = Instantiate(boss, bossPoint.transform.position, Quaternion.Euler(0, 180, 0));
+                boss.name = "MiniGameBoss";
+               // miniGame.SetActive(true);
                 GameObject player = GameObject.Find("Player");
                 player.transform.position = playerMovePoint.transform.position;
                 miniGameStart = true;
                 miniGameSelectMenu.SetActive(false);
 
                 miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
-                miniGameBoss.remainingTime = 60;
+                remainingTime = 60;
 
                 // 입장권 제거
                 ticket--;
@@ -122,19 +132,21 @@ public class MiniGameScript : MonoBehaviour
         player.transform.position = new Vector2(0, 0);
         playerMovement.currentTarget = null;
 
+        // 플레이어 돈 획득
+        playerMovement.money += (int)miniGameBoss.hitDamege / 10;
+
         // 스테이지 재시작
         stageManager.restartStage = true;
         monsterSpwan.RemoveAllMonsters();
         stageManager.EndMiniGameSpawningMonsters();
 
-        // 플레이어 돈 획득
-        playerMovement.money += (int)miniGameBoss.hitDamege / 10;
 
-        // 보스 상태 초기화
-        BossReset();
+        // 보스 삭제
+        Destroy(boss);
+       // BossReset();
     }
 
-    public void BossReset()
+/*    public void BossReset()
     {
         if (miniGameBoss != null)
         {
@@ -153,5 +165,5 @@ public class MiniGameScript : MonoBehaviour
 
             miniGame.SetActive(false);
         }
-    }
+    }*/
 }

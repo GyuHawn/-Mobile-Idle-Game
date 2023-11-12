@@ -149,9 +149,10 @@ public class PlayerMovement : MonoBehaviour
             ShootBullet();
         }*/
 
-        // 타겟이 없을때 새로운 적 타겟
-        if (!IsValidTarget(currentTarget))
+        // 현재 타겟이 여전히 감지 범위 내에 있는지 확인
+        if (!IsValidTarget(currentTarget) || !IsMonsterInDetectionRange())
         {
+            // 감지 범위 내에서 새로운 몬스터를 찾음
             currentTarget = GetRandomMonster();
         }
 
@@ -253,6 +254,21 @@ public class PlayerMovement : MonoBehaviour
     {
         // 타겟이 null 이거나 Monster 태그가 없으면 false 반환
         return target != null && (target.CompareTag("Monster") || target.CompareTag("Boss") || target.CompareTag("MiniGame"));
+    }
+
+    private bool IsMonsterInDetectionRange()
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(pos.position, boxSize, 0f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Monster") || collider.CompareTag("Boss") || collider.CompareTag("MiniGame"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void ShootBullet() // 사격

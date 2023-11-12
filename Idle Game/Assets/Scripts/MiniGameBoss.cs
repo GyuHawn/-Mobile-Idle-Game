@@ -62,7 +62,6 @@ public class MiniGameBoss : MonoBehaviour
         skillEnermy2[0] = GameObject.Find("Skill4Enermy");
         skillEnermy2[1] = GameObject.Find("Skill5Enermy");
 
-        miniGameScript.remainingTime = 10;
         StartCoroutine(SelectPattern());
     }
 
@@ -198,10 +197,6 @@ public class MiniGameBoss : MonoBehaviour
             sprRenderer.enabled = true;
             yield return new WaitForSeconds(time);
             sprRenderer.enabled = false;
-        }
-        else
-        {
-            Debug.LogError("SpriteRenderer가 " + enermy.name + "에 없습니다.");
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MiniGameScript : MonoBehaviour
 {
@@ -19,18 +20,17 @@ public class MiniGameScript : MonoBehaviour
     public GameObject boss;
     // 보스 소환 위치
     public GameObject bossPoint;
+    // 생성한 보스
+    private GameObject bossInstance;
+
+    // 플레이어 시작 위치
+    public GameObject playerMovePoint;
 
     // 미니게임 메뉴
     public GameObject miniGameSelectMenu;
     // 미니게임 종료 메뉴
     public GameObject endMiniGame;
     public GameObject miniGameMenu;
-
-    // 미니게임 맵
-    public GameObject miniGame;
-
-    // 플레이어 시작 위치
-    public GameObject playerMovePoint;
 
     // 게임 시간
     public float gameTime;
@@ -41,12 +41,13 @@ public class MiniGameScript : MonoBehaviour
     // 남은 시간 
     public float remainingTime;
     public TMP_Text remainingTimeText;
-
     public bool miniGameStart;
 
     void Start()
     {
+        ticket = 2;
         miniGameStart = false;
+        remainingTime = 30;
 
         stageManager = FindObjectOfType<StageManger>();
         monsterSpwan = FindObjectOfType<MonsterSpwan>();
@@ -63,18 +64,42 @@ public class MiniGameScript : MonoBehaviour
             }
             if (miniGameBoss != null)
             {
-                remainingTime -= Time.deltaTime;
+                if (remainingTime > 0)
+                {
+                    remainingTime -= Time.deltaTime;
+                }
+
                 if (remainingTime <= 0)
                 {
                     endMiniGame.SetActive(true);
+
+                    GameObject player = GameObject.Find("Player");
+                    player.transform.position = new Vector2(-28, -51);
 
                     foreach (GameObject skill in miniGameBoss.skills)
                     {
                         Destroy(skill);
                     }
-                    miniGameBoss.skills.Clear();
 
-                    boss.SetActive(false);
+                    miniGameBoss.skills.Clear();
+                    foreach (var skillEnermy in miniGameBoss.skillEnermy1)
+                    {
+                        SpriteRenderer sprRenderer = skillEnermy.GetComponent<SpriteRenderer>();
+                        if (sprRenderer != null)
+                        {
+                            sprRenderer.enabled = false;
+                        }
+                    }
+                    foreach (var skillEnermy in miniGameBoss.skillEnermy2)
+                    {
+                        SpriteRenderer sprRenderer = skillEnermy.GetComponent<SpriteRenderer>();
+                        if (sprRenderer != null)
+                        {
+                            sprRenderer.enabled = false;
+                        }
+                    }
+
+                    //boss.SetActive(false);
                 }
             }
         }
@@ -84,7 +109,7 @@ public class MiniGameScript : MonoBehaviour
         if (ticket <= 1)
         {
             plusTicket -= Time.deltaTime;
-            if(plusTicket <= 0)
+            if (plusTicket <= 0)
             {
                 ticket++;
                 plusTicket = 60;
@@ -98,9 +123,8 @@ public class MiniGameScript : MonoBehaviour
         {
             if (!miniGameStart)
             {
-                boss = Instantiate(boss, bossPoint.transform.position, Quaternion.Euler(0, 180, 0));
-                boss.name = "MiniGameBoss";
-               // miniGame.SetActive(true);
+                bossInstance = Instantiate(boss, bossPoint.transform.position, Quaternion.Euler(0, 180, 0));
+                bossInstance.name = "MiniGameBoss";
                 GameObject player = GameObject.Find("Player");
                 player.transform.position = playerMovePoint.transform.position;
                 miniGameStart = true;
@@ -140,30 +164,7 @@ public class MiniGameScript : MonoBehaviour
         monsterSpwan.RemoveAllMonsters();
         stageManager.EndMiniGameSpawningMonsters();
 
-
         // 보스 삭제
-        Destroy(boss);
-       // BossReset();
+        Destroy(bossInstance);
     }
-
-/*    public void BossReset()
-    {
-        if (miniGameBoss != null)
-        {
-            // 보스 상태 초기화
-            miniGameBoss.StopAllCoroutines();
-
-            foreach (GameObject skill in miniGameBoss.skills)
-            {
-                Destroy(skill);
-            }
-
-            miniGameBoss.skills.Clear();
-            miniGameBoss.currentSkillIndex1 = 0;
-            miniGameBoss.currentSkillIndex2 = 0;
-            miniGameBoss.hitDamege = 0;
-
-            miniGame.SetActive(false);
-        }
-    }*/
 }

@@ -65,9 +65,9 @@ public class PlayerMovement : MonoBehaviour
     public float skill3Time = 0;
 
     // 착용한 장비 스탯
-    private float prevWeaponPower = 0;
-    private float prevArmorDefense = 0;
-    private float prevRingHealth = 0;
+    private float prevWeaponPower;
+    private float prevArmorDefense;
+    private float prevRingHealth ;
 
     // 미니게임 입장
     public bool miniGame = false;
@@ -75,12 +75,13 @@ public class PlayerMovement : MonoBehaviour
     public TMP_Text miniGamePlayerDie;
 
     private Rigidbody2D rigib;
-
+    private SpriteRenderer spriteRenderer;
     private void Awake()
     {
         miniGameScript = GameObject.Find("Manager").GetComponent<MiniGameScript>();
 
         rigib = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         joystick = FindObjectOfType<FixedJoystick>();
 
         // 게임이 시작될 때 PlayerPrefs에서 스탯 값을 불러온다
@@ -311,6 +312,34 @@ public class PlayerMovement : MonoBehaviour
                 miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
                 miniGameScript.hitDamageUI.SetActive(false);
 
+                // 보스 관련 삭제
+                GameObject miniBoss = GameObject.Find("MiniGameBoss");
+
+                foreach (GameObject skill in miniGameBoss.skills)
+                {
+                    Destroy(skill);
+                }
+                miniGameBoss.skills.Clear();
+
+                foreach (var skillEnermy in miniGameBoss.skillEnermy1)
+                {
+                    SpriteRenderer sprRenderer = skillEnermy.GetComponent<SpriteRenderer>();
+                    if (sprRenderer != null)
+                    {
+                        sprRenderer.enabled = false;
+                    }
+                }
+                foreach (var skillEnermy in miniGameBoss.skillEnermy2)
+                {
+                    SpriteRenderer sprRenderer = skillEnermy.GetComponent<SpriteRenderer>();
+                    if (sprRenderer != null)
+                    {
+                        sprRenderer.enabled = false;
+                    }
+                }
+                Destroy(miniBoss);
+
+
                 miniGame = false;
                 miniGameScript.miniGameStart = false;
 
@@ -320,8 +349,6 @@ public class PlayerMovement : MonoBehaviour
                 transform.position = new Vector2(0, 0);
                 isDead = false;
 
-                // 보스 상태 초기화
-                //miniGameScript.BossReset();
 
                 StartCoroutine(MiniGameDieMoney());
 
@@ -341,29 +368,39 @@ public class PlayerMovement : MonoBehaviour
         maxHealth = baseMaxHealth + upgradeHealth;  // 최대 체력만 증가
         power = basePower + upgradePower;
         defense = baseDefense + upgradeDefense;
-        totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
+        totalPower = (int)(power + defense + maxHealth);
         skillPower = power;
     }
 
+
     public void ChangeEquipment(float newWeaponPower, float newArmorDefense, float newRingHealth)
     {
-        // 이전 장비의 스탯을 제거
-        power -= prevWeaponPower;
-        defense -= prevArmorDefense;
-        maxHealth -= prevRingHealth;
+        // 무기의 스탯 변경
+        if (newWeaponPower != 0)
+        {
+            power -= prevWeaponPower; // 이전 무기 스탯 제거
+            prevWeaponPower = newWeaponPower; // 새 무기 스탯 저장
+            power += prevWeaponPower; // 새 무기 스탯 추가
+        }
 
-        // 새 장비의 스탯을 저장
-        prevWeaponPower = newWeaponPower;
-        prevArmorDefense = newArmorDefense;
-        prevRingHealth = newRingHealth;
+        // 방어구의 스탯 변경
+        if (newArmorDefense != 0)
+        {
+            defense -= prevArmorDefense; // 이전 방어구 스탯 제거
+            prevArmorDefense = newArmorDefense; // 새 방어구 스탯 저장
+            defense += prevArmorDefense; // 새 방어구 스탯 추가
+        }
 
-        // 새 장비의 스탯을 추가
-        power += newWeaponPower;
-        defense += newArmorDefense;
-        maxHealth += newRingHealth;
+        // 반지의 스탯 변경
+        if (newRingHealth != 0)
+        {
+            maxHealth -= prevRingHealth; // 이전 반지 스탯 제거
+            prevRingHealth = newRingHealth; // 새 반지 스탯 저장
+            maxHealth += prevRingHealth; // 새 반지 스탯 추가
+        }
 
         // 전체 투력 적용
-        totalPower = (int)(power + (defense / 0.5f) + (maxHealth / 0.3f));
+        totalPower = (int)(power + defense + maxHealth);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -376,6 +413,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 damege = monsterScript.power - defense;
                 currentHealth -= damege;
+                StartCoroutine(FlashWhite());
             }
         }
     }
@@ -393,9 +431,20 @@ public class PlayerMovement : MonoBehaviour
                 if (collision.gameObject.CompareTag("BossSkill"))
                 {
                     currentHealth -= miniGameBoss.damage;
+                    StartCoroutine(FlashWhite());
                 }
             }
 
+        }
+    }
+
+    IEnumerator FlashWhite()
+    {
+        if (gameObject.CompareTag("Player"))
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
         }
     }
 

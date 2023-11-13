@@ -83338,7 +83338,7 @@ MonoBehaviour:
   weaponRareNum: 0
   weaponUnipueNum: 0
   weaponLegendNum: 0
-  weaponEpicNum: 1
+  weaponEpicNum: 0
   noneArmorNomal: {fileID: 1734591886}
   noneArmorRare: {fileID: 359616677}
   noneArmorUnipue: {fileID: 560893404}
@@ -83353,7 +83353,7 @@ MonoBehaviour:
   armorRareNum: 0
   armorUnipueNum: 0
   armorLegendNum: 0
-  armorEpicNum: 1
+  armorEpicNum: 0
   noneRingNomal: {fileID: 242054581}
   noneRingRare: {fileID: 59143794}
   noneRingUnipue: {fileID: 1782848445}
@@ -83371,7 +83371,7 @@ MonoBehaviour:
   ringEpicNum: 0
   currentWeapon: 0
   currentArmor: 0
-  currentRing: 1
+  currentRing: 0
   currentWeaponPos: {fileID: 2060220507}
   currentArmorPos: {fileID: 437766897}
   currentRingPos: {fileID: 997811352}

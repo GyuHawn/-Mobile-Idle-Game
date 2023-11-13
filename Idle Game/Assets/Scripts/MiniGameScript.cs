@@ -10,6 +10,7 @@ public class MiniGameScript : MonoBehaviour
     private MiniGameBoss miniGameBoss;
     private StageManger stageManager;
     private MonsterSpwan monsterSpwan;
+    private PlayerMovement playerMovement;
 
     // 미니게임 입장 횟수
     public int ticket;
@@ -45,13 +46,12 @@ public class MiniGameScript : MonoBehaviour
 
     void Start()
     {
-        ticket = 2;
-        miniGameStart = false;
-        remainingTime = 30;
-
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         stageManager = FindObjectOfType<StageManger>();
         monsterSpwan = FindObjectOfType<MonsterSpwan>();
 
+        ticket = 2;
+        miniGameStart = false;
     }
 
     void Update()
@@ -126,12 +126,13 @@ public class MiniGameScript : MonoBehaviour
                 bossInstance = Instantiate(boss, bossPoint.transform.position, Quaternion.Euler(0, 180, 0));
                 bossInstance.name = "MiniGameBoss";
                 GameObject player = GameObject.Find("Player");
+                playerMovement.currentHealth = playerMovement.maxHealth;
                 player.transform.position = playerMovePoint.transform.position;
                 miniGameStart = true;
                 miniGameSelectMenu.SetActive(false);
 
                 miniGameBoss = GameObject.Find("MiniGameBoss").GetComponent<MiniGameBoss>();
-                remainingTime = 60;
+                remainingTime = 30;
 
                 // 입장권 제거
                 ticket--;
@@ -142,7 +143,6 @@ public class MiniGameScript : MonoBehaviour
     public void EndMiniGame()
     {
         GameObject player = GameObject.Find("Player");
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
 
         // 미니게임 종료
         playerMovement.miniGame = false;
@@ -153,6 +153,7 @@ public class MiniGameScript : MonoBehaviour
         miniGameMenu.SetActive(false);
 
         // 플레이어 이동
+        playerMovement.currentHealth = playerMovement.maxHealth;
         player.transform.position = new Vector2(0, 0);
         playerMovement.currentTarget = null;
 

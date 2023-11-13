@@ -49,6 +49,8 @@ public class StageSelect : MonoBehaviour
             monsterSpwan.spwanMonster = 10; // 생성해야 할 몬스터 수 초기화
 
             monsterSpwan.RemoveAllMonsters();
+
+            selectStage.SetActive(false);
         }
     }
 

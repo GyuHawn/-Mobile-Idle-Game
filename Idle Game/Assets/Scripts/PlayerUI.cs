@@ -24,7 +24,7 @@ public class PlayerUI : MonoBehaviour
         {
             currentMoney.text = playerMovement.money.ToString();
             currentLevel.text = "Lv. " + playerMovement.level.ToString();
-            currentTotalPower.text = "Power. " + (playerMovement.totalPower - 356).ToString();
+            currentTotalPower.text = "Power. " + (playerMovement.totalPower).ToString();
         }      
     }
 }

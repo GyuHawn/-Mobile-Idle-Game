@@ -6,8 +6,8 @@ using TMPro;
 
 public class StageSelect : MonoBehaviour
 {
-    private StageManger stageManager;
-    private MonsterSpwan monsterSpwan;
+    private StageManager stageManager;
+    private MonsterSpawn monsterSpwan;
 
     public GameObject selectStage;
 
@@ -15,8 +15,8 @@ public class StageSelect : MonoBehaviour
 
     void Start()
     {
-        stageManager = GameObject.Find("Manager").GetComponent<StageManger>();
-        monsterSpwan = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
+        stageManager = GameObject.Find("Manager").GetComponent<StageManager>();
+        monsterSpwan = GameObject.Find("Manager").GetComponent<MonsterSpawn>();
     }
 
     public void OnSelectStage()

@@ -6,7 +6,7 @@ using TMPro;
 
 public class StageUI : MonoBehaviour
 {
-    private StageManger stageManger;
+    private StageManager stageManger;
 
     public TMP_Text currentStage; // 현재 스테이지
     public TMP_Text currentMonsterNum; // 몬스터 수
@@ -17,7 +17,7 @@ public class StageUI : MonoBehaviour
 
     void Start()
     {
-        stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
+        stageManger = GameObject.Find("Manager").GetComponent<StageManager>();
         slHP = GetComponent<Slider>();
     }
 

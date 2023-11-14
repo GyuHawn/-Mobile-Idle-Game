@@ -6,8 +6,8 @@ using UnityEngine;
 public class MonsterScript : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-    public MonsterSpwan spawner;
-    private StageManger sManager;
+    public MonsterSpawn spawner;
+    private StageManager sManager;
 
     // 기본 체력 등..
     private float baseMaxHealth; // 체력
@@ -37,8 +37,8 @@ public class MonsterScript : MonoBehaviour
 
     void Start()
     {
-        spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
-        sManager = GameObject.Find("Manager").GetComponent<StageManger>();
+        spawner = GameObject.Find("Manager").GetComponent<MonsterSpawn>();
+        sManager = GameObject.Find("Manager").GetComponent<StageManager>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spd = 5;

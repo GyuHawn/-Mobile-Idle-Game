@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class IdleScript : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-    private StageManger stageManger;
+    private StageManager stageManger;
 
     public GameObject idleUI;
     public float idleMoney;
@@ -31,7 +31,7 @@ public class IdleScript : MonoBehaviour
     private void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
+        stageManger = GameObject.Find("Manager").GetComponent<StageManager>();
 
         // 게임이 처음 시작되었는지 확인합니다.
         if (PlayerPrefs.GetInt("GameStarted", 0) == 0)

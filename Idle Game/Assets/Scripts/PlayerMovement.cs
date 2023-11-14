@@ -290,8 +290,8 @@ public class PlayerMovement : MonoBehaviour
             miniGameScript.miniGameStart = false;
             isDead = true;
             transform.position = new Vector2(0, 0);
-            MonsterSpwan spawner = GameObject.Find("Manager").GetComponent<MonsterSpwan>();
-            StageManger stageManger = GameObject.Find("Manager").GetComponent<StageManger>();
+            MonsterSpawn spawner = GameObject.Find("Manager").GetComponent<MonsterSpawn>();
+            StageManager stageManger = GameObject.Find("Manager").GetComponent<StageManager>();
 
             if (spawner != null)
             {

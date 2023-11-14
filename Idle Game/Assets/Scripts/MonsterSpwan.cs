@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class MonsterSpwan : MonoBehaviour
+public class MonsterSpawn : MonoBehaviour
 {
-    private StageManger smanager;
+    private StageManager smanager;
 
     public GameObject[] spwaner;
     public GameObject[] monsters;
@@ -13,12 +13,13 @@ public class MonsterSpwan : MonoBehaviour
 
     public int spwanMonster;
 
+    private int spawnIndex = 0;  // 소환 위치
     public bool isSpawning = false; // 현재 소환 중인지 표시하는 변수
     public int activeMonsters = 0; // 활성화된 몬스터 개수
 
     void Start()
     {
-        smanager = GetComponent<StageManger>();
+        smanager = GetComponent<StageManager>();
         spwanMonster = 0;
     }
 
@@ -26,6 +27,7 @@ public class MonsterSpwan : MonoBehaviour
     {
         if (spwanMonster > 0 && !isSpawning)
         {
+            spawnIndex = 0;
             StartCoroutine(SpawnMonsters());
         }
     }
@@ -34,18 +36,20 @@ public class MonsterSpwan : MonoBehaviour
     {
         isSpawning = true;
 
-        int spawnCount = Mathf.Min(spwaner.Length, spwanMonster);
+        // 보스 포함 몬스터 수 계산
+        int spawnCount = Mathf.Min(spwaner.Length, Mathf.Min(spwanMonster, 10));
+
         for (int i = 0; i < spawnCount; i++)
         {
             GameObject monsterObj;
-            if (i == spawnCount - 1) // 마지막 몬스터인 경우
+            if (i == spawnCount - 1 && spawnCount == 10) // 마지막 몬스터인 경우,  spawnCount가 10일때만 보스 소환
             {
-                monsterObj = Instantiate(boss[smanager.stage % boss.Length], spwaner[i].transform.position, Quaternion.identity);
+                monsterObj = Instantiate(boss[smanager.stage % boss.Length], spwaner[spawnIndex].transform.position, Quaternion.identity);
                 monsterObj.transform.localScale = new Vector3(3, 3, 3);
             }
             else
             {
-                monsterObj = Instantiate(monsters[smanager.stage % monsters.Length], spwaner[i].transform.position, Quaternion.identity);
+                monsterObj = Instantiate(monsters[smanager.stage % monsters.Length], spwaner[spawnIndex].transform.position, Quaternion.identity);            
             }
 
             MonsterScript monsterScript = monsterObj.GetComponent<MonsterScript>();
@@ -53,6 +57,8 @@ public class MonsterSpwan : MonoBehaviour
 
             activeMonsters++;
             spwanMonster--;
+
+            spawnIndex = (spawnIndex + 1) % spwaner.Length;
 
             yield return new WaitForSeconds(0.5f);
         }

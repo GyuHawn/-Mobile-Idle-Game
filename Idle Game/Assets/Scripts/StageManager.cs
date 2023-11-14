@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StageManger : MonoBehaviour
+public class StageManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-    private MonsterSpwan monsterSpwan;
+    private MonsterSpawn monsterSpwan;
 
     public int stage; // 현재 스테이지
     public int maxStage; // 최대 스테이지
@@ -27,7 +27,7 @@ public class StageManger : MonoBehaviour
     void Awake()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        monsterSpwan = GetComponent<MonsterSpwan>();
+        monsterSpwan = GetComponent<MonsterSpawn>();
 
         stage = PlayerPrefs.GetInt("stage", 1);
         maxStage = PlayerPrefs.GetInt("maxStage", 1);
@@ -50,14 +50,12 @@ public class StageManger : MonoBehaviour
 
 
     void Start()
-    {      
-        StartCoroutine(StartSpawningMonsters());
+    {
+        StartSpawningMonsters();
     }
 
-    public IEnumerator StartSpawningMonsters()
+    public void StartSpawningMonsters()
     {
-        yield return new WaitForSeconds(3f); // 게임 시작 후 3초 대기
-
         if (restartStage)
         {
             deadMonster = 0;
@@ -95,6 +93,7 @@ public class StageManger : MonoBehaviour
             {
                 monsterSpwan.spwanMonster = 10;
             }
+
         }
         if (stageCleared)
         {
@@ -119,7 +118,7 @@ public class StageManger : MonoBehaviour
                 playerMovement.currentHealth = playerMovement.maxHealth;
 
                 restartStage = true; // 스테이지 재시작 설정
-                StartCoroutine(StartSpawningMonsters()); // 스테이지 재시작
+                StartSpawningMonsters(); // 스테이지 재시작
             }
         }
     }

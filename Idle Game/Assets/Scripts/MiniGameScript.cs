@@ -8,13 +8,13 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class MiniGameScript : MonoBehaviour
 {
     private MiniGameBoss miniGameBoss;
-    private StageManger stageManager;
-    private MonsterSpwan monsterSpwan;
+    private StageManager stageManager;
+    private MonsterSpawn monsterSpwan;
     private PlayerMovement playerMovement;
 
     // 미니게임 입장 횟수
     public int ticket;
-    public float plusTicket = 60;
+    public float plusTicket = 600;
     public TMP_Text ticketText;
 
     // 보스 오브젝트
@@ -47,10 +47,9 @@ public class MiniGameScript : MonoBehaviour
     void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        stageManager = FindObjectOfType<StageManger>();
-        monsterSpwan = FindObjectOfType<MonsterSpwan>();
+        stageManager = FindObjectOfType<StageManager>();
+        monsterSpwan = FindObjectOfType<MonsterSpawn>();
 
-        ticket = 2;
         miniGameStart = false;
     }
 
@@ -112,7 +111,7 @@ public class MiniGameScript : MonoBehaviour
             if (plusTicket <= 0)
             {
                 ticket++;
-                plusTicket = 60;
+                plusTicket = 600;
             }
         }
     }

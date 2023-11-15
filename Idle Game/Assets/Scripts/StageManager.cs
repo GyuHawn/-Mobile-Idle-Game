@@ -9,6 +9,7 @@ public class StageManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private MonsterSpawn monsterSpwan;
+    private AudioManager audioManager;
 
     public int stage; // 현재 스테이지
     public int maxStage; // 최대 스테이지
@@ -27,6 +28,7 @@ public class StageManager : MonoBehaviour
     void Awake()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         monsterSpwan = GetComponent<MonsterSpawn>();
 
         stage = PlayerPrefs.GetInt("stage", 1);
@@ -99,6 +101,7 @@ public class StageManager : MonoBehaviour
         {
             if (monsterSpwan.spwanMonster == 0 && monsterSpwan.activeMonsters == 0)
             {
+                audioManager.PlayStageClearSound();
                 if (isGo)
                 {
                     stage++; // 스테이지 증가

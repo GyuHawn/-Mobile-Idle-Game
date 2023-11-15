@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private FixedJoystick joystick;
     private MiniGameBoss miniGameBoss;
     private MiniGameScript miniGameScript;
+    private AudioManager audioManager;
 
     // 기본 체력 등..
     private float baseMaxHealth; // 체력
@@ -79,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         miniGameScript = GameObject.Find("Manager").GetComponent<MiniGameScript>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         rigib = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -107,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
 
         power = basePower; // 일단 몬스터 처리를 위한 선언
         StartCoroutine(AutoShoot());
-
         miniGame = false;
     }
      
@@ -278,8 +279,8 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab, shoot.position, Quaternion.identity);
             bullet.GetComponent<BulletScript>().target = currentTarget.gameObject;
-            bullet.GetComponent<Rigidbody2D>().velocity =
-                (currentTarget.transform.position - shoot.position).normalized * bulletSpeed;
+            bullet.GetComponent<Rigidbody2D>().velocity = (currentTarget.transform.position - shoot.position).normalized * bulletSpeed;
+            audioManager.PlayAttackSound();
         }
     }
 
@@ -287,6 +288,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((!isDead && currentHealth <= 0) && !miniGame)
         {
+            audioManager.PlayDieSound();
             miniGameScript.miniGameStart = false;
             isDead = true;
             transform.position = new Vector2(0, 0);
@@ -306,6 +308,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (miniGameBoss != null)
             {
+                audioManager.PlayDieSound();
                 miniGameMoney.SetActive(true);
                 isDead = true;
 
@@ -339,7 +342,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 Destroy(miniBoss);
 
-
                 miniGame = false;
                 miniGameScript.miniGameStart = false;
 
@@ -349,9 +351,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.position = new Vector2(0, 0);
                 isDead = false;
 
-
                 StartCoroutine(MiniGameDieMoney());
-
             }
         }
     }
@@ -413,6 +413,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 damege = monsterScript.power - defense;
                 currentHealth -= damege;
+                audioManager.PlayHitSound();
                 StartCoroutine(FlashWhite());
             }
         }
@@ -431,6 +432,7 @@ public class PlayerMovement : MonoBehaviour
                 if (collision.gameObject.CompareTag("BossSkill"))
                 {
                     currentHealth -= miniGameBoss.damage;
+                    audioManager.PlayHitSound();
                     StartCoroutine(FlashWhite());
                 }
             }
@@ -532,9 +534,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(pos.position, boxSize);
-    }
+    }*/
 }

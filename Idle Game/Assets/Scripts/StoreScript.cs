@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class StoreScript : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    private AudioManager audioManager;
 
     // ÇÃ·¹ÀÌ¾î µ·
     public TMP_Text playerMoney;
@@ -30,6 +31,7 @@ public class StoreScript : MonoBehaviour
     void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         itemNum = 1;
     }
 
@@ -66,6 +68,7 @@ public class StoreScript : MonoBehaviour
     {
         if (playerMovement.money >= 100)
         {
+            audioManager.PlayItemGrawSound();
             oneDraw.SetActive(true);
             TenDraw.SetActive(false);
             shop.SetActive(false);
@@ -76,6 +79,7 @@ public class StoreScript : MonoBehaviour
     {
         if (playerMovement.money >= 1000)
         {
+            audioManager.PlayItemGrawSound();
             oneDraw.SetActive(false);
             TenDraw.SetActive(true);
             shop.SetActive(false);

@@ -11,6 +11,7 @@ public class MiniGameScript : MonoBehaviour
     private StageManager stageManager;
     private MonsterSpawn monsterSpwan;
     private PlayerMovement playerMovement;
+    private AudioManager audioManager;
 
     // 미니게임 입장 횟수
     public int ticket;
@@ -47,6 +48,7 @@ public class MiniGameScript : MonoBehaviour
     void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         stageManager = FindObjectOfType<StageManager>();
         monsterSpwan = FindObjectOfType<MonsterSpawn>();
 
@@ -136,6 +138,11 @@ public class MiniGameScript : MonoBehaviour
                 // 입장권 제거
                 ticket--;
             }
+        }
+        else
+        {
+            audioManager.PlayFailMoneySound();
+            Debug.Log("입장권 부족");
         }
     }
 

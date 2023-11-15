@@ -7,6 +7,7 @@ using TMPro;
 public class UpgradeUI : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    private AudioManager audioManager;
 
     public TMP_Text HealthUpMoney;
     public TMP_Text HealthLevel;
@@ -18,6 +19,7 @@ public class UpgradeUI : MonoBehaviour
     void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
    
@@ -35,6 +37,7 @@ public class UpgradeUI : MonoBehaviour
 
     public void HealthUP()
     {
+        audioManager.PlayUpgradeSound();
         int cost = (10 * (playerMovement.upgradeHealth));
         if (playerMovement.money >= cost)
         {
@@ -44,12 +47,14 @@ public class UpgradeUI : MonoBehaviour
         }
         else
         {
+            audioManager.PlayFailMoneySound();
             Debug.Log("µ∑∫Œ¡∑");
         }
     }
 
     public void PowerUP()
     {
+        audioManager.PlayUpgradeSound();
         int cost = (10 * (playerMovement.upgradePower));
         if (playerMovement.money >= cost)
         {
@@ -59,12 +64,14 @@ public class UpgradeUI : MonoBehaviour
         }
         else
         {
+            audioManager.PlayFailMoneySound();
             Debug.Log("µ∑∫Œ¡∑");
         }
     }
 
     public void DefenseUP()
     {
+        audioManager.PlayUpgradeSound();
         int cost = (10 * (playerMovement.upgradeDefense));
         if (playerMovement.money >= cost)
         {
@@ -74,6 +81,7 @@ public class UpgradeUI : MonoBehaviour
         }
         else
         {
+            audioManager.PlayFailMoneySound();
             Debug.Log("µ∑∫Œ¡∑");
         }
     }

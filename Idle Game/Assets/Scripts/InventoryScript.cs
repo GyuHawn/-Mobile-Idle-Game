@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class InventoryScript : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    private AudioManager audioManager;
 
     // 공용
     public GameObject inventory; // 장비창
@@ -129,6 +130,7 @@ public class InventoryScript : MonoBehaviour
     private void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         // 장비 개수 불러오기
         weaponNomalNum = PlayerPrefs.GetInt("weaponNomalNum", weaponNomalNum);
@@ -358,6 +360,7 @@ public class InventoryScript : MonoBehaviour
     // 무기 장착
     void EquipWeapon(int weaponIndex)
     {
+        audioManager.PlayUseItemSound();
         // 이전에 장착된 무기가 있으면 제거
         if (currentWeaponObj != null)
         {
@@ -376,6 +379,7 @@ public class InventoryScript : MonoBehaviour
     // 방어구 장착
     void EquipArmor(int armorIndex)
     {
+        audioManager.PlayUseItemSound();
         // 이전에 장착된 방어구가 있으면 제거
         if (currentArmorObj != null)
         {
@@ -394,6 +398,7 @@ public class InventoryScript : MonoBehaviour
     // 반지 장착
     void EquipRing(int ringIndex)
     {
+        audioManager.PlayUseItemSound();
         // 이전에 장착된 반지가 있으면 제거
         if (currentRingObj != null)
         {

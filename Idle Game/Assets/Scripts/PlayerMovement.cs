@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private MiniGameBoss miniGameBoss;
     private MiniGameScript miniGameScript;
     private AudioManager audioManager;
+    private BulletScript bulletScript;
 
     // 기본 체력 등..
     private float baseMaxHealth; // 체력
@@ -45,14 +46,22 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform shoot;
     public float bulletSpeed;
+    public GameObject bullet;
 
     // 사망
     private bool isDead;
 
     // 스킬
-    public GameObject skill;
-    public GameObject skillObj;
-    public float skillPower;
+    public GameObject skill1;
+    public GameObject skill2;
+    public GameObject skill3;
+    public GameObject skill4;
+    public GameObject skill1Obj;
+    public GameObject skill4Obj;
+    public float skill1Power;
+    public float skill4Power;
+    public bool useSkill3;
+
 
     // 스킬 쿨타임
     public GameObject skill1timeUI;
@@ -61,9 +70,12 @@ public class PlayerMovement : MonoBehaviour
     public TMP_Text skill2TimeText;
     public GameObject skill3timeUI;
     public TMP_Text skill3TimeText;
+    public GameObject skill4timeUI;
+    public TMP_Text skill4TimeText;
     public float skill1Time = 0;
     public float skill2Time = 0;
     public float skill3Time = 0;
+    public float skill4Time = 0;
 
     // 착용한 장비 스탯
     private float prevWeaponPower;
@@ -86,8 +98,6 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         joystick = FindObjectOfType<FixedJoystick>();
 
-        // 게임이 시작될 때 PlayerPrefs에서 스탯 값을 불러온다
-        // 만약 저장된 값이 없다면 기본값을 사용
         upgradeHealth = PlayerPrefs.GetInt("upgradeHealth", 1);
         upgradePower = PlayerPrefs.GetInt("upgradePower", 1);
         upgradeDefense = PlayerPrefs.GetInt("upgradeDefense", 1);
@@ -107,9 +117,10 @@ public class PlayerMovement : MonoBehaviour
         // 변동 스탯
         SetStats();
 
-        power = basePower; // 일단 몬스터 처리를 위한 선언
+        power = basePower;
         StartCoroutine(AutoShoot());
         miniGame = false;
+        useSkill3 = false;
     }
      
     private void OnApplicationPause(bool pauseStatus) // 어플이 정지될때 데이터 저장
@@ -186,10 +197,20 @@ public class PlayerMovement : MonoBehaviour
                 skill3timeUI.SetActive(false);
             }
         }
+        if (skill4Time > 0)
+        {
+            skill4Time -= Time.deltaTime;
+
+            if (skill4Time <= 0)
+            {
+                skill4timeUI.SetActive(false);
+            }
+        }
 
         skill1TimeText.text = Mathf.RoundToInt(skill1Time).ToString();
         skill2TimeText.text = Mathf.RoundToInt(skill2Time).ToString();
         skill3TimeText.text = Mathf.RoundToInt(skill3Time).ToString();
+        skill4TimeText.text = Mathf.RoundToInt(skill4Time).ToString();
     }
 
     private void FixedUpdate()
@@ -277,7 +298,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsValidTarget(currentTarget))
         {
-            GameObject bullet = Instantiate(bulletPrefab, shoot.position, Quaternion.identity);
+            bullet = Instantiate(bulletPrefab, shoot.position, Quaternion.identity);
+            bullet.name = "Bullet";
             bullet.GetComponent<BulletScript>().target = currentTarget.gameObject;
             bullet.GetComponent<Rigidbody2D>().velocity = (currentTarget.transform.position - shoot.position).normalized * bulletSpeed;
             audioManager.PlayAttackSound();
@@ -369,7 +391,8 @@ public class PlayerMovement : MonoBehaviour
         power = basePower + upgradePower;
         defense = baseDefense + upgradeDefense;
         totalPower = (int)(power + defense + maxHealth);
-        skillPower = power;
+        skill1Power = power;
+        skill4Power = power * 0.1f;
     }
 
 
@@ -470,11 +493,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (skill1Time <= 0)
         {
-            if (!skill.activeSelf) // 스킬이 이미 활성화되어 있는지 확인
+            if (!skill1.activeSelf) // 스킬이 이미 활성화되어 있는지 확인
             {
-                skill.SetActive(true);
+                skill1.SetActive(true);
                 StartCoroutine(RotateSkillObject());
-                skill1Time = 60f;
+                skill1Time = 30f;
                 skill1timeUI.SetActive(true); // 쿨타임 UI 활성화
             }
         }
@@ -488,37 +511,48 @@ public class PlayerMovement : MonoBehaviour
         {
             float zRotation = Mathf.Lerp(0, 360, elapsedTime / rotateTime);
 
-            skillObj.transform.rotation = Quaternion.Euler(skillObj.transform.rotation.eulerAngles.x, skillObj.transform.rotation.eulerAngles.y, zRotation);
+            skill1Obj.transform.rotation = Quaternion.Euler(skill1Obj.transform.rotation.eulerAngles.x, skill1Obj.transform.rotation.eulerAngles.y, zRotation);
 
             yield return null;
 
             elapsedTime += Time.deltaTime;
         }
 
-        skillObj.transform.rotation = Quaternion.Euler(skillObj.transform.rotation.eulerAngles.x, skillObj.transform.rotation.eulerAngles.y, 360);
+        skill1Obj.transform.rotation = Quaternion.Euler(skill1Obj.transform.rotation.eulerAngles.x, skill1Obj.transform.rotation.eulerAngles.y, 360);
 
-        skill.SetActive(false);
+        skill1.SetActive(false);
     }
 
     public void Skill2()
     {
         if(skill2Time <= 0)
-        {         
+        {       
+            skill2.SetActive(true);
             currentHealth = maxHealth;
-            skill2Time = 120f;
+            skill2Time = 30f;
             skill2timeUI.SetActive(true); // 쿨타임 UI 활성화
+            StartCoroutine(Skill2Effect());
         }
     }
+
+    IEnumerator Skill2Effect()
+    {
+        yield return new WaitForSeconds(1f);
+        skill2.SetActive(false);
+    }
+
     public void Skill3()
     {
-        if(skill3Time <= 0)
+        if (skill3Time <= 0)
         {
+            useSkill3 = true;
+            skill3.SetActive(true);
             power += 1000;
             defense += 1000;
             spd += 0.1f;
             bulletSpeed += 10;
             skill3timeUI.SetActive(true); // 쿨타임 UI 활성화
-            skill3Time = 120;
+            skill3Time = 30;
 
             StartCoroutine(SkillUpgrade());
         }       
@@ -527,12 +561,31 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator SkillUpgrade()
     {
         yield return new WaitForSeconds(5f);
+        skill3.SetActive(false);
+        useSkill3 = false;
         power -= 1000;
         defense -= 1000;
         spd -= 0.1f;
         bulletSpeed -= 10;
     }
 
+    public void Skill4()
+    {
+        if (skill4Time <= 0)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                float randomX = UnityEngine.Random.Range(-8, 8);
+                float randomY = UnityEngine.Random.Range(-4, 4);
+
+                Vector3 randomPosition = new Vector3(gameObject.transform.position.x + randomX, gameObject.transform.position.y + randomY, 0);
+
+                Instantiate(skill4Obj, randomPosition, Quaternion.identity);
+            }
+            skill4timeUI.SetActive(true);
+            skill4Time = 10;
+        }
+    }
 
     /*private void OnDrawGizmos()
     {

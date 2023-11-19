@@ -126,7 +126,11 @@ public class MonsterScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Skill1"))
         {
-            currentHealth -= playerMovement.skillPower;
+            currentHealth -= playerMovement.skill1Power;
+        }
+        if (collision.gameObject.CompareTag("Skill4"))
+        {
+            currentHealth -= playerMovement.skill4Power;
         }
     }
 

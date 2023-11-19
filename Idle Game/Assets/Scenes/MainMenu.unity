@@ -18748,6 +18748,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmMainMenu: {fileID: 591986492}
   bgmMainGame: {fileID: 0}
+  bgmAttack: {fileID: 0}
+  bgmButton: {fileID: 0}
+  bgmDie: {fileID: 0}
+  bgmHit: {fileID: 0}
+  bgmItemGraw: {fileID: 0}
+  bgmStageClear: {fileID: 0}
+  bgmUpgrade: {fileID: 0}
+  bgmUseItem: {fileID: 0}
+  bgmFailMoney: {fileID: 0}
 --- !u!1 &734454983
 GameObject:
   m_ObjectHideFlags: 0

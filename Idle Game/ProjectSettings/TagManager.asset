@@ -18,6 +18,8 @@ TagManager:
   - Epic
   - BossSkill
   - MiniGame
+  - FxTemporaire
+  - Skill4
   layers:
   - Default
   - TransparentFX
@@ -33,7 +35,7 @@ TagManager:
   - Wall
   - BossSkill
   - MiniGame
-  - 
+  - Skill4
   - 
   - 
   - 

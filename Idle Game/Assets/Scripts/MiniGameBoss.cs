@@ -211,7 +211,11 @@ public class MiniGameBoss : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Skill1"))
         {
-            hitDamege += playerMovement.skillPower;
+            hitDamege += playerMovement.skill1Power;
+        }
+        if (collision.gameObject.CompareTag("Skill4"))
+        {
+            hitDamege += playerMovement.skill4Power;
         }
     }
 }

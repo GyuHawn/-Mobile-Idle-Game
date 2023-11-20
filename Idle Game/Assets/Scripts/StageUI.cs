@@ -24,7 +24,7 @@ public class StageUI : MonoBehaviour
 
     void Update()
     {
-        currentStage.text = "Stage" + stageManger.stage;
+        currentStage.text = "스테이지" + stageManger.stage;
         currentMonsterNum.text = stageManger.deadMonster.ToString() + " / 10"; 
         zeroSlider();
     }

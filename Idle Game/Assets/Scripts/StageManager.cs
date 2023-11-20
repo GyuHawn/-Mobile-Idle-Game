@@ -78,7 +78,7 @@ public class StageManager : MonoBehaviour
 
     void Update()
     {
-        maxStageText.text = "Max Stage : " + maxStage;
+        maxStageText.text = "최대 스테이지 : " + maxStage;
 
         if (deadMonster >= 10)
         {

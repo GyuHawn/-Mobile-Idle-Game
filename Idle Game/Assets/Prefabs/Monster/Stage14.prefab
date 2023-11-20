@@ -205,6 +205,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   spd: 0
+  damageTextPrefab: {fileID: 2542751715126656795, guid: 320693e4c6880694b852b475cb08c49a,
+    type: 3}
 --- !u!1 &6786533041085755234
 GameObject:
   m_ObjectHideFlags: 0

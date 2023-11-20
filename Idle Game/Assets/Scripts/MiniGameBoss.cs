@@ -26,12 +26,9 @@ public class MiniGameBoss : MonoBehaviour
 
     // 입은 데미지
     public float hitDamege;
-    //public GameObject hitDamageUI;
-    //public TMP_Text hitDamegeText;
 
-    // 남은 시간 
-   // public float remainingTime;
-    //public TMP_Text remainingTimeText;
+    // 데미지 텍스트
+    public GameObject damageTextPrefab;
 
     private Animator anim;
 
@@ -204,6 +201,10 @@ public class MiniGameBoss : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = damage;
+
             hitDamege += playerMovement.power;
         }
     }
@@ -211,10 +212,18 @@ public class MiniGameBoss : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Skill1"))
         {
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = playerMovement.skill1Power;
+
             hitDamege += playerMovement.skill1Power;
         }
         if (collision.gameObject.CompareTag("Skill4"))
         {
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = playerMovement.skill4Power;
+
             hitDamege += playerMovement.skill4Power;
         }
     }

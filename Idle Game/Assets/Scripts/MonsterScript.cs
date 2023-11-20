@@ -22,7 +22,7 @@ public class MonsterScript : MonoBehaviour
     public float defense; // 방어력 = 기본방어 + (기본방어* (스테이지/10))
     public static int money; // 몬스터 돈 = 기본 돈 + (기본돈* (스테이지/10))
 
-    private float damege; // 데미지 = 공격력 - 방어력
+    private float damage; // 데미지 = 공격력 - 방어력
 
     // 감지
     public Transform pos;
@@ -31,6 +31,9 @@ public class MonsterScript : MonoBehaviour
 
     // 이동
     public float spd;
+
+    // 데미지 텍스트
+    public GameObject damageTextPrefab;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -74,7 +77,7 @@ public class MonsterScript : MonoBehaviour
             return;
 
         // 데미지 설정
-        damege = playerMovement.power - defense;
+        damage = playerMovement.power - defense;
 
 
         Collider2D playerInBox = Physics2D.OverlapBox(pos.position, boxSize, 0f, playerLayer);
@@ -117,7 +120,11 @@ public class MonsterScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            currentHealth -= damege;
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = damage;
+
+            currentHealth -= damage;
             StartCoroutine(FlashWhite());
         }
     }
@@ -126,10 +133,18 @@ public class MonsterScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Skill1"))
         {
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = playerMovement.skill1Power;
+
             currentHealth -= playerMovement.skill1Power;
         }
         if (collision.gameObject.CompareTag("Skill4"))
         {
+            Vector3 damageTextPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            GameObject damageText = Instantiate(damageTextPrefab, damageTextPosition, Quaternion.identity);
+            damageText.GetComponent<DamageText>().damage = playerMovement.skill4Power;
+
             currentHealth -= playerMovement.skill4Power;
         }
     }

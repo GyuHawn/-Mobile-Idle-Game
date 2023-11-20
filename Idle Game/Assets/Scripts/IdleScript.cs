@@ -58,7 +58,7 @@ public class IdleScript : MonoBehaviour
             idleUI.SetActive(true);
 
             // 종료한 시간 표시
-            lastQuitTimeText.text = $"{idleDuration.Minutes}Min {idleDuration.Seconds}Sec";
+            lastQuitTimeText.text = $"{idleDuration.Minutes}분 {idleDuration.Seconds}초";
 
             // 대기중에 얻은 돈 표시
             idleMoneyText.text = $"{idleMoney}";

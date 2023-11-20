@@ -23,8 +23,8 @@ public class PlayerUI : MonoBehaviour
         if(currentMoney != null)
         {
             currentMoney.text = playerMovement.money.ToString();
-            currentLevel.text = "Lv. " + playerMovement.level.ToString();
-            currentTotalPower.text = "Power. " + (playerMovement.totalPower).ToString();
+            currentLevel.text = "레벨 : " + playerMovement.level.ToString();
+            currentTotalPower.text = "전투력 : " + (playerMovement.totalPower).ToString();
         }      
     }
 }

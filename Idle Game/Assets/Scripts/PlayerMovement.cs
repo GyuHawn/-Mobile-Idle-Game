@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxHealth; // 체력 = 기본체력 + 업글체력
     public float currentHealth;
     public float power; // 공격력 = 기본공격 + 업글공격
-    private float defense; // 방어력 = 기본방어 + 업글방어
+    public float defense; // 방어력 = 기본방어 + 업글방어
     public int money = 10; // 돈
 
     public int level; // 업글레벨 (체 + 공 + 방 업글)

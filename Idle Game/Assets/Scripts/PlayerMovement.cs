@@ -426,6 +426,38 @@ public class PlayerMovement : MonoBehaviour
         totalPower = (int)(power + defense + maxHealth);
     }
 
+    /*
+     public void ChangeEquipment(float newWeaponPower, float newArmorDefense, float newRingHealth, int weaponUpgradeLevel, int armorUpgradeLevel, int ringUpgradeLevel)
+    {
+        // 무기의 스탯 변경
+        if (newWeaponPower != 0)
+        {
+            power -= prevWeaponPower; // 이전 무기 스탯 제거
+            prevWeaponPower = newWeaponPower + itemUpgrade.CalculateAttack(weaponUpgradeLevel, 0); // 새 무기 스탯 저장
+            power += prevWeaponPower; // 새 무기 스탯 추가
+        }
+
+        // 방어구의 스탯 변경
+        if (newArmorDefense != 0)
+        {
+            defense -= prevArmorDefense; // 이전 방어구 스탯 제거
+            prevArmorDefense = newArmorDefense + itemUpgrade.CalculateDefense(armorUpgradeLevel, 0); // 새 방어구 스탯 저장
+            defense += prevArmorDefense; // 새 방어구 스탯 추가
+        }
+
+        // 반지의 스탯 변경
+        if (newRingHealth != 0)
+        {
+            maxHealth -= prevRingHealth; // 이전 반지 스탯 제거
+            prevRingHealth = newRingHealth + itemUpgrade.CalculateHealth(ringUpgradeLevel, 0); // 새 반지 스탯 저장
+            maxHealth += prevRingHealth; // 새 반지 스탯 추가
+        }
+
+        // 전체 투력 적용
+        totalPower = (int)(power + defense + maxHealth);
+    }
+     */
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Boss") || collision.gameObject.CompareTag("MiniGame"))

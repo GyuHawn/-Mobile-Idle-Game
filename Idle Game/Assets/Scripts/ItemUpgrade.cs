@@ -6,10 +6,12 @@ using TMPro;
 
 public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
 {
-    // n. 노말 / r. 레어 / u. 유니크 / l. 레전더리 / e. 에픽
+    private PlayerMovement playerMovement;
 
+    // n. 노말 / r. 레어 / u. 유니크 / l. 레전더리 / e. 에픽
     //공용
     public int upgradePercent; // 기본 강화수치
+    public TMP_Text playerMoney;
 
     // 무기
     public int nWeaponUpgrade; // 강화수치
@@ -121,6 +123,11 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
     public int[] weaponDefense; // 등급별 방어력 수치
     public int[] weaponHealth; // 등급별 체력 수치
 
+    private void Awake()
+    {
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+    }
+
     void Start()
     {
         UpMoney = new int[] { 10, 15, 20, 25, 30 };
@@ -207,6 +214,8 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
 
     void Update()
     {
+        playerMoney.text = playerMovement.money.ToString();
+
         // 강화 텍스트
         //무기
         nWeaponUpgradeText.text = "+" + nWeaponUpgrade.ToString(); // 강화수치 텍스트
@@ -353,79 +362,143 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         return num;
     }
 
-
     // 무기 강화 버튼
     public void NomalWeapon()
     {
-        nWeaponUpgrade = UpgradeNum(nWeaponUpgrade, CalculatePercent(nWeaponUpgrade), 0);
+        if (playerMovement.money >= nWeaponUpMoney)
+        {
+            nWeaponUpgrade = UpgradeNum(nWeaponUpgrade, CalculatePercent(nWeaponUpgrade), 0);
+            playerMovement.money -= nWeaponUpMoney;
+        }
     }
+
     public void RareWeapon()
     {
-        rWeaponUpgrade = UpgradeNum(rWeaponUpgrade, CalculatePercent(rWeaponUpgrade), 1);
+        if (playerMovement.money >= rWeaponUpMoney)
+        {
+            rWeaponUpgrade = UpgradeNum(rWeaponUpgrade, CalculatePercent(rWeaponUpgrade), 1);
+            playerMovement.money -= rWeaponUpMoney;
+        }
     }
 
     public void UniqueWeapon()
     {
-        uWeaponUpgrade = UpgradeNum(uWeaponUpgrade, CalculatePercent(uWeaponUpgrade), 2);
+        if (playerMovement.money >= uWeaponUpMoney)
+        {
+            uWeaponUpgrade = UpgradeNum(uWeaponUpgrade, CalculatePercent(uWeaponUpgrade), 2);
+            playerMovement.money -= uWeaponUpMoney;
+        }
     }
+
     public void LegendWeapon()
     {
-        lWeaponUpgrade = UpgradeNum(lWeaponUpgrade, CalculatePercent(lWeaponUpgrade), 3);
+        if (playerMovement.money >= lWeaponUpMoney)
+        {
+            lWeaponUpgrade = UpgradeNum(lWeaponUpgrade, CalculatePercent(lWeaponUpgrade), 3);
+            playerMovement.money -= lWeaponUpMoney;
+        }
     }
+
     public void EpicWeapon()
     {
-        eWeaponUpgrade = UpgradeNum(eWeaponUpgrade, CalculatePercent(eWeaponUpgrade), 4);
+        if (playerMovement.money >= eWeaponUpMoney)
+        {
+            eWeaponUpgrade = UpgradeNum(eWeaponUpgrade, CalculatePercent(eWeaponUpgrade), 4);
+            playerMovement.money -= eWeaponUpMoney;
+        }
     }
 
 
     // 방어구 강화 버튼
     public void NormalArmor()
     {
-        nArmorUpgrade = UpgradeNum(nArmorUpgrade, CalculatePercent(nArmorUpgrade), 0);
+        if (playerMovement.money >= nArmorUpMoney)
+        {
+            nArmorUpgrade = UpgradeNum(nArmorUpgrade, CalculatePercent(nArmorUpgrade), 0);
+            playerMovement.money -= nArmorUpMoney;
+        }
     }
 
     public void RareArmor()
     {
-        rArmorUpgrade = UpgradeNum(rArmorUpgrade, CalculatePercent(rArmorUpgrade), 0);
+        if (playerMovement.money >= rArmorUpMoney)
+        {
+            rArmorUpgrade = UpgradeNum(rArmorUpgrade, CalculatePercent(rArmorUpgrade), 1);
+            playerMovement.money -= rArmorUpMoney;
+        }
     }
+
     public void UniqueArmor()
     {
-        uArmorUpgrade = UpgradeNum(uArmorUpgrade, CalculatePercent(uArmorUpgrade), 2);
+        if (playerMovement.money >= uArmorUpMoney)
+        {
+            uArmorUpgrade = UpgradeNum(uArmorUpgrade, CalculatePercent(uArmorUpgrade), 2);
+            playerMovement.money -= uArmorUpMoney;
+        }
     }
 
     public void LegendArmor()
     {
-        lArmorUpgrade = UpgradeNum(lArmorUpgrade, CalculatePercent(lArmorUpgrade), 3);
+        if (playerMovement.money >= lArmorUpMoney)
+        {
+            lArmorUpgrade = UpgradeNum(lArmorUpgrade, CalculatePercent(lArmorUpgrade), 3);
+            playerMovement.money -= lArmorUpMoney;
+        }
     }
 
     public void EpicArmor()
     {
-        eArmorUpgrade = UpgradeNum(eArmorUpgrade, CalculatePercent(eArmorUpgrade), 4);
+        if (playerMovement.money >= eArmorUpMoney)
+        {
+            eArmorUpgrade = UpgradeNum(eArmorUpgrade, CalculatePercent(eArmorUpgrade), 4);
+            playerMovement.money -= eArmorUpMoney;
+        }
     }
 
 
     // 반지 강화 버튼
     public void NormalRing()
     {
-        nRingUpgrade = UpgradeNum(nRingUpgrade, CalculatePercent(nRingUpgrade), 0);
+        if (playerMovement.money >= nRingUpMoney)
+        {
+            nRingUpgrade = UpgradeNum(nRingUpgrade, CalculatePercent(nRingUpgrade), 0);
+            playerMovement.money -= nRingUpMoney;
+        }
     }
 
     public void RareRing()
     {
-        rRingUpgrade = UpgradeNum(rRingUpgrade, CalculatePercent(rRingUpgrade), 0);
+        if (playerMovement.money >= rRingUpMoney)
+        {
+            rRingUpgrade = UpgradeNum(rRingUpgrade, CalculatePercent(rRingUpgrade), 1);
+            playerMovement.money -= rRingUpMoney;
+        }
     }
+
     public void UniqueRing()
     {
-        uRingUpgrade = UpgradeNum(uRingUpgrade, CalculatePercent(uRingUpgrade), 2);
+        if (playerMovement.money >= uRingUpMoney)
+        {
+            uRingUpgrade = UpgradeNum(uRingUpgrade, CalculatePercent(uRingUpgrade), 2);
+            playerMovement.money -= uRingUpMoney;
+        }
     }
 
     public void LegendRing()
     {
-        lRingUpgrade = UpgradeNum(lRingUpgrade, CalculatePercent(lRingUpgrade), 3);
+        if (playerMovement.money >= lRingUpMoney)
+        {
+            lRingUpgrade = UpgradeNum(lRingUpgrade, CalculatePercent(lRingUpgrade), 3);
+            playerMovement.money -= lRingUpMoney;
+        }
     }
 
     public void EpicRing()
     {
-        eRingUpgrade = UpgradeNum(eRingUpgrade, CalculatePercent(eRingUpgrade), 4);
+        if (playerMovement.money >= eRingUpMoney)
+        {
+            eRingUpgrade = UpgradeNum(eRingUpgrade, CalculatePercent(eRingUpgrade), 4);
+            playerMovement.money -= eRingUpMoney;
+        }
     }
 }

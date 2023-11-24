@@ -4807,7 +4807,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 76286847}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: RareRing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &76286847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9550,7 +9562,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 133441950}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: EpicArmor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &133441950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18569,7 +18593,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 274867564}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: RareArmor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &274867564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22818,7 +22854,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 349169027}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: EpicRing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &349169027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45650,7 +45698,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 755696737}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: LegendWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &755696737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71659,7 +71719,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1258244486}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: UniqueRing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1258244486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75740,7 +75812,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1323602782}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: NormalArmor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1323602782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76405,7 +76489,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1335437737}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: LegendArmor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1335437737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83408,7 +83504,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1471683283}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: LegendRing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1471683283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87370,7 +87478,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1540608651}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: UniqueArmor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1540608651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96053,6 +96173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1691078057}
+  - component: {fileID: 1691078058}
   - component: {fileID: 1691078055}
   - component: {fileID: 1691078054}
   - component: {fileID: 1691078056}
@@ -96265,6 +96386,113 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1691078058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691078053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb240b3e35ad940875675eb88467dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradePercent: 0
+  nWeaponUpgrade: 0
+  rWeaponUpgrade: 0
+  uWeaponUpgrade: 0
+  lWeaponUpgrade: 0
+  eWeaponUpgrade: 0
+  nWeaponUpgradeText: {fileID: 1426450373}
+  rWeaponUpgradeText: {fileID: 2134977132}
+  uWeaponUpgradeText: {fileID: 964714351}
+  lWeaponUpgradeText: {fileID: 723369552}
+  eWeaponUpgradeText: {fileID: 1095906806}
+  nWeaponPercent: 0
+  rWeaponPercent: 0
+  uWeaponPercent: 0
+  lWeaponPercent: 0
+  eWeaponPercent: 0
+  nWeaponPercentText: {fileID: 1307686559}
+  rWeaponPercentText: {fileID: 137493681}
+  uWeaponPercentText: {fileID: 1587512766}
+  lWeaponPercentText: {fileID: 1328344058}
+  eWeaponPercentText: {fileID: 1239583289}
+  nWeaponUpMoney: 0
+  rWeaponUpMoney: 0
+  uWeaponUpMoney: 0
+  lWeaponUpMoney: 0
+  eWeaponUpMoney: 0
+  nWeaponUpMoneyText: {fileID: 2130802430}
+  rWeaponUpMoneyText: {fileID: 767586254}
+  uWeaponUpMoneyText: {fileID: 1987664900}
+  lWeaponUpMoneyText: {fileID: 155657338}
+  eWeaponUpMoneyText: {fileID: 146713848}
+  nArmorUpgrade: 0
+  rArmorUpgrade: 0
+  uArmorUpgrade: 0
+  lArmorUpgrade: 0
+  eArmorUpgrade: 0
+  nArmorUpgradeText: {fileID: 1883805084}
+  rArmorUpgradeText: {fileID: 472735900}
+  uArmorUpgradeText: {fileID: 1864520832}
+  lArmorUpgradeText: {fileID: 1841695226}
+  eArmorUpgradeText: {fileID: 1338558986}
+  nArmorPercent: 0
+  rArmorPercent: 0
+  uArmorPercent: 0
+  lArmorPercent: 0
+  eArmorPercent: 0
+  nArmorPercentText: {fileID: 1739209411}
+  rArmorPercentText: {fileID: 515289073}
+  uArmorPercentText: {fileID: 728919723}
+  lArmorPercentText: {fileID: 152961792}
+  eArmorPercentText: {fileID: 1478316739}
+  nArmorUpMoney: 0
+  rArmorUpMoney: 0
+  uArmorUpMoney: 0
+  lArmorUpMoney: 0
+  eArmorUpMoney: 0
+  nArmorUpMoneyText: {fileID: 335191813}
+  rArmorUpMoneyText: {fileID: 980039186}
+  uArmorUpMoneyText: {fileID: 1176105272}
+  lArmorUpMoneyText: {fileID: 3609497}
+  eArmorUpMoneyText: {fileID: 5499983}
+  nRingUpgrade: 0
+  rRingUpgrade: 0
+  uRingUpgrade: 0
+  lRingUpgrade: 0
+  eRingUpgrade: 0
+  nRingUpgradeText: {fileID: 1443649788}
+  rRingUpgradeText: {fileID: 1577434835}
+  uRingUpgradeText: {fileID: 370573431}
+  lRingUpgradeText: {fileID: 2034474678}
+  eRingUpgradeText: {fileID: 1483622208}
+  nRingPercent: 0
+  rRingPercent: 0
+  uRingPercent: 0
+  lRingPercent: 0
+  eRingPercent: 0
+  nRingPercentText: {fileID: 338326610}
+  rRingPercentText: {fileID: 991143650}
+  uRingPercentText: {fileID: 1606997203}
+  lRingPercentText: {fileID: 1336796004}
+  eRingPercentText: {fileID: 606109347}
+  nRingUpMoney: 0
+  rRingUpMoney: 0
+  uRingUpMoney: 0
+  lRingUpMoney: 0
+  eRingUpMoney: 0
+  nRingUpMoneyText: {fileID: 1561343651}
+  rRingUpMoneyText: {fileID: 1743693955}
+  uRingUpMoneyText: {fileID: 625676672}
+  lRingUpMoneyText: {fileID: 31312627}
+  eRingUpMoneyText: {fileID: 156218639}
+  UpMoney: 
+  weaponPower: 
+  weaponDefense: 
+  weaponHealth: 
 --- !u!1 &1692661869
 GameObject:
   m_ObjectHideFlags: 0
@@ -104784,7 +105012,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1828903302}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: UniqueWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1828903302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105698,7 +105938,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1844459772}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: NormalRing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1844459772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108820,7 +109072,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1887734620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: EpicWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1887734620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116046,7 +116310,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2007751461}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: NomalWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2007751461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122023,7 +122299,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2126018935}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1691078058}
+        m_TargetAssemblyTypeName: ItemUpgrade, Assembly-CSharp
+        m_MethodName: RareWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2126018935
 MonoBehaviour:
   m_ObjectHideFlags: 0

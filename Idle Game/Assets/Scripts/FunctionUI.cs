@@ -11,6 +11,8 @@ public class FunctionUI : MonoBehaviour
     public GameObject shopMenu;
     public GameObject inventoryMenu;
     public GameObject miniGameMenu;
+    public GameObject miniGame;
+    
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class FunctionUI : MonoBehaviour
     {
         audioManager.PlayButtonSound();
         inventoryMenu.SetActive(!inventoryMenu.activeSelf);
+        miniGame.SetActive(!miniGame.activeSelf);
     }
     public void OnMiniGameMenu()
     {

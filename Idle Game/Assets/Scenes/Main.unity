@@ -32951,7 +32951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &530157700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48632,6 +48632,7 @@ MonoBehaviour:
   shopMenu: {fileID: 1721768912}
   inventoryMenu: {fileID: 884144300}
   miniGameMenu: {fileID: 1685730704}
+  miniGame: {fileID: 1310454109}
 --- !u!114 &800401749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52429,7 +52430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &884144301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -96485,6 +96486,7 @@ MonoBehaviour:
   ringLegendNumText: {fileID: 1690112896}
   ringEpicNumText: {fileID: 223354733}
   itemForceText: {fileID: 1678887071}
+  miniGame: {fileID: 1310454109}
 --- !u!4 &1691078057
 Transform:
   m_ObjectHideFlags: 0

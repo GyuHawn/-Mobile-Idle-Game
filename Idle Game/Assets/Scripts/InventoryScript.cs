@@ -127,6 +127,9 @@ public class InventoryScript : MonoBehaviour
     // 장비 효과
     public TMP_Text itemForceText;
 
+    // 이외 오브젝트
+    public GameObject miniGame;
+
     private void Start()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
@@ -358,7 +361,7 @@ public class InventoryScript : MonoBehaviour
     }
 
     // 무기 장착
-    void EquipWeapon(int weaponIndex)
+    public void EquipWeapon(int weaponIndex)
     {
         audioManager.PlayUseItemSound();
         // 이전에 장착된 무기가 있으면 제거
@@ -371,9 +374,14 @@ public class InventoryScript : MonoBehaviour
         currentWeaponObj = Instantiate(weaponPrefabs[weaponIndex], Vector3.zero, Quaternion.identity);
         currentWeaponObj.transform.SetParent(currentWeaponPos.transform, false);
 
-        // 무기의 공격력 설정
+        OnEquipWeapon(weaponIndex);
+    }
+
+    // 무기의 공격력 설정
+    public void OnEquipWeapon(int weaponIndex)
+    {
         weaponPower = weaponPowerValues[weaponIndex];
-        playerMovement.ChangeEquipment(weaponPower,0 , 0);
+        playerMovement.ChangeEquipment(weaponPower, 0, 0);
     }
 
     // 방어구 장착
@@ -390,7 +398,12 @@ public class InventoryScript : MonoBehaviour
         currentArmorObj = Instantiate(armorPrefabs[armorIndex], Vector3.zero, Quaternion.identity);
         currentArmorObj.transform.SetParent(currentArmorPos.transform, false);
 
-        // 방어구의 방어력 설정
+        OnEquipArmor(armorIndex);
+    }
+
+    // 방어구의 방어력 설정
+    public void OnEquipArmor(int armorIndex)
+    {
         armorDefense = armorDefenseValues[armorIndex];
         playerMovement.ChangeEquipment(0, armorDefense, 0);
     }
@@ -409,7 +422,13 @@ public class InventoryScript : MonoBehaviour
         currentRingObj = Instantiate(ringPrefabs[ringIndex], Vector3.zero, Quaternion.identity);
         currentRingObj.transform.SetParent(currentRingPos.transform, false);
 
-        // 반지의 체력 설정
+
+        OnEquipRing(ringIndex);
+    }
+
+    // 반지의 체력 설정
+    public void OnEquipRing(int ringIndex)
+    {
         ringHealth = ringHealthValues[ringIndex];
         playerMovement.ChangeEquipment(0, 0, ringHealth);
     }
@@ -607,5 +626,6 @@ public class InventoryScript : MonoBehaviour
     public void ExitInventory()
     {
         inventory.SetActive(false);
+        miniGame.SetActive(true);
     }
 }

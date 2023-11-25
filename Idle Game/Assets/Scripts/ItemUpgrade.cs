@@ -7,6 +7,7 @@ using TMPro;
 public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
 {
     private PlayerMovement playerMovement;
+    private InventoryScript inventoryScript;
 
     // n. 노말 / r. 레어 / u. 유니크 / l. 레전더리 / e. 에픽
     //공용
@@ -126,6 +127,7 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
     private void Awake()
     {
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        inventoryScript = GameObject.Find("ItemManager").GetComponent<InventoryScript>();
     }
 
     void Start()
@@ -369,6 +371,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             nWeaponUpgrade = UpgradeNum(nWeaponUpgrade, CalculatePercent(nWeaponUpgrade), 0);
             playerMovement.money -= nWeaponUpMoney;
+            inventoryScript.weaponPowerValues[0] = CalculateAttack(nWeaponUpgrade, 0);
+
+            inventoryScript.OnEquipWeapon(0);
         }
     }
 
@@ -378,6 +383,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             rWeaponUpgrade = UpgradeNum(rWeaponUpgrade, CalculatePercent(rWeaponUpgrade), 1);
             playerMovement.money -= rWeaponUpMoney;
+            inventoryScript.weaponPowerValues[1] = CalculateAttack(rWeaponUpgrade, 1);
+
+            inventoryScript.OnEquipWeapon(1);
         }
     }
 
@@ -387,6 +395,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             uWeaponUpgrade = UpgradeNum(uWeaponUpgrade, CalculatePercent(uWeaponUpgrade), 2);
             playerMovement.money -= uWeaponUpMoney;
+            inventoryScript.weaponPowerValues[2] = CalculateAttack(uWeaponUpgrade, 2);
+
+            inventoryScript.OnEquipWeapon(2);
         }
     }
 
@@ -396,6 +407,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             lWeaponUpgrade = UpgradeNum(lWeaponUpgrade, CalculatePercent(lWeaponUpgrade), 3);
             playerMovement.money -= lWeaponUpMoney;
+            inventoryScript.weaponPowerValues[3] = CalculateAttack(lWeaponUpgrade, 3);
+
+            inventoryScript.OnEquipWeapon(3);
         }
     }
 
@@ -405,6 +419,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             eWeaponUpgrade = UpgradeNum(eWeaponUpgrade, CalculatePercent(eWeaponUpgrade), 4);
             playerMovement.money -= eWeaponUpMoney;
+            inventoryScript.weaponPowerValues[4] = CalculateAttack(eWeaponUpgrade, 4);
+
+            inventoryScript.OnEquipWeapon(4);
         }
     }
 
@@ -416,6 +433,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             nArmorUpgrade = UpgradeNum(nArmorUpgrade, CalculatePercent(nArmorUpgrade), 0);
             playerMovement.money -= nArmorUpMoney;
+            inventoryScript.armorDefenseValues[0] = CalculateAttack(nArmorUpgrade, 0);
+
+            inventoryScript.OnEquipArmor(0);
         }
     }
 
@@ -425,6 +445,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             rArmorUpgrade = UpgradeNum(rArmorUpgrade, CalculatePercent(rArmorUpgrade), 1);
             playerMovement.money -= rArmorUpMoney;
+            inventoryScript.armorDefenseValues[1] = CalculateAttack(rArmorUpgrade, 1);
+
+            inventoryScript.OnEquipArmor(1);
         }
     }
 
@@ -434,6 +457,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             uArmorUpgrade = UpgradeNum(uArmorUpgrade, CalculatePercent(uArmorUpgrade), 2);
             playerMovement.money -= uArmorUpMoney;
+            inventoryScript.armorDefenseValues[2] = CalculateAttack(uArmorUpgrade, 2);
+
+            inventoryScript.OnEquipArmor(2);
         }
     }
 
@@ -443,6 +469,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             lArmorUpgrade = UpgradeNum(lArmorUpgrade, CalculatePercent(lArmorUpgrade), 3);
             playerMovement.money -= lArmorUpMoney;
+            inventoryScript.armorDefenseValues[3] = CalculateAttack(lArmorUpgrade, 3);
+
+            inventoryScript.OnEquipArmor(3);
         }
     }
 
@@ -452,6 +481,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             eArmorUpgrade = UpgradeNum(eArmorUpgrade, CalculatePercent(eArmorUpgrade), 4);
             playerMovement.money -= eArmorUpMoney;
+            inventoryScript.armorDefenseValues[4] = CalculateAttack(eArmorUpgrade, 4);
+
+            inventoryScript.OnEquipArmor(4);
         }
     }
 
@@ -463,6 +495,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             nRingUpgrade = UpgradeNum(nRingUpgrade, CalculatePercent(nRingUpgrade), 0);
             playerMovement.money -= nRingUpMoney;
+            inventoryScript.ringHealthValues[0] = CalculateAttack(nRingUpgrade, 0);
+
+            inventoryScript.OnEquipRing(0);
         }
     }
 
@@ -472,6 +507,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             rRingUpgrade = UpgradeNum(rRingUpgrade, CalculatePercent(rRingUpgrade), 1);
             playerMovement.money -= rRingUpMoney;
+            inventoryScript.ringHealthValues[1] = CalculateAttack(rRingUpgrade, 1);
+
+            inventoryScript.OnEquipRing(1);
         }
     }
 
@@ -481,6 +519,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             uRingUpgrade = UpgradeNum(uRingUpgrade, CalculatePercent(uRingUpgrade), 2);
             playerMovement.money -= uRingUpMoney;
+            inventoryScript.ringHealthValues[2] = CalculateAttack(uRingUpgrade, 2);
+
+            inventoryScript.OnEquipRing(2);
         }
     }
 
@@ -490,6 +531,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             lRingUpgrade = UpgradeNum(lRingUpgrade, CalculatePercent(lRingUpgrade), 3);
             playerMovement.money -= lRingUpMoney;
+            inventoryScript.ringHealthValues[3] = CalculateAttack(lRingUpgrade, 3);
+
+            inventoryScript.OnEquipRing(3);
         }
     }
 
@@ -499,6 +543,9 @@ public class ItemUpgrade : MonoBehaviour // 강화 증가 확인
         {
             eRingUpgrade = UpgradeNum(eRingUpgrade, CalculatePercent(eRingUpgrade), 4);
             playerMovement.money -= eRingUpMoney;
+            inventoryScript.ringHealthValues[4] = CalculateAttack(eRingUpgrade, 4);
+
+            inventoryScript.OnEquipRing(4);
         }
     }
 }
